@@ -2,11 +2,13 @@ import React from "react";
 import { Box, Typography } from "@material-ui/core";
 import Skill from "./skill";
 
-export default function Skills({ name, skillNames }) {
+export default function SkillsSection({ name, skillNames }) {
   return (
-    <Box display="flex" flexDirection="column" width="20%">
+    <Box display="flex" flexDirection="column" width="30%">
       <Typography color="primary">
-        <Box textAlign="center">{name}</Box>
+        <Box textAlign="center" fontSize="30px" mb="10px">
+          {name}
+        </Box>
       </Typography>
       <Box>
         {skillNames.map((skillName) => (

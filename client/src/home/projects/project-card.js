@@ -24,7 +24,7 @@ export default function ProjectCard({ image, title, description }) {
   return (
     <Card className={classes.card}>
       <CardActionArea>
-        <CardMedia className={classes.image} image={image} title="mandelbrot" />
+        <CardMedia className={classes.image} image={image} title={title} />
         <CardContent>
           <Typography component="div">
             <Box textAlign="center" fontWeight="fontWeightBold">

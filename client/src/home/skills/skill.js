@@ -22,7 +22,7 @@ export default function Skill({ name }) {
     <Card className={classes.card}>
       <CardActionArea>
         <Typography color="primary">
-          <Box textAlign="center" ml="10px" mr="10px">
+          <Box textAlign="center" ml="10px" mr="10px" fontSize="15px">
             {name}
           </Box>
         </Typography>

@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { Box, Typography, makeStyles, Button } from "@material-ui/core";
-import Projects from "./projects";
-import About from "./about";
+import Projects from "./projects/projects";
+import Skills from "./skills/skills";
 
 const useStyles = makeStyles({
   portfolio: {
@@ -32,11 +32,13 @@ export default function Portfolio() {
       >
         <Box display="flex" flexDirection="column" alignItems="center">
           <Typography variant="h2" color="primary">
-            Hi, I'm Brian Hambleton
+            <Box fontSize="4vw">Hi, I'm Brian Hambleton</Box>
           </Typography>
           <Typography variant="h4" color="primary">
-            Competent web developer, fast learner, and just an all around good
-            dude
+            <Box fontSize="2vw">
+              Competent web developer, fast learner, and just an all around good
+              dude
+            </Box>
           </Typography>
         </Box>
         <Button
@@ -47,13 +49,8 @@ export default function Portfolio() {
           Learn More
         </Button>
       </Box>
-      <About scrollTo={projectsRef} />
+      <Skills scrollTo={projectsRef} />
       <Box width="98%">
-        <Typography variant="h4" color="primary">
-          <Box textAlign="center" mb="20px" ml="30px">
-            Some projects
-          </Box>
-        </Typography>
         <Projects />
       </Box>
     </>
