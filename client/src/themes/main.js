@@ -7,7 +7,12 @@ export const theme = createMuiTheme({
     fontSize: 17,
   },
   palette: {
-    primary: { main: grey[50] },
+    primary: {
+      main: grey[50],
+    },
+    secondary: {
+      main: grey[500],
+    },
     background: {
       default: "#95D5D4",
     },

@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import Navbar from "./navbar";
+import Footer from "./footer";
 import Portfolio from "./portfolio";
 
 export default function Home() {
-  const [setBlogRendered, blogRendered] = useState(false);
+  const [blogRendered, setBlogRendered] = useState(false);
   return (
     <>
-      <Navbar />
-      <Portfolio blogRendered={blogRendered} />
+      <Navbar blogRendered={blogRendered} />
+      <Portfolio />
+      <Footer />
     </>
   );
 }
