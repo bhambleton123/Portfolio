@@ -1,6 +1,7 @@
 import React from "react";
 import { Typography, Box } from "@material-ui/core";
 import EmailForm from "./email-form";
+import OtherOptions from "./other-options";
 
 export default function Contact() {
   return (
@@ -15,6 +16,7 @@ export default function Contact() {
       <Box display="flex" justifyContent="center">
         <EmailForm />
       </Box>
+      <OtherOptions />
     </>
   );
 }
