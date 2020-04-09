@@ -7,6 +7,8 @@ import {
   Typography,
 } from "@material-ui/core";
 
+import { Link } from "react-router-dom";
+
 const useStyles = makeStyles({
   appBar: {
     backgroundColor: "#e8f1ff",
@@ -19,6 +21,9 @@ const useStyles = makeStyles({
       },
     },
   },
+  links: {
+    textDecoration: "none",
+  },
 });
 
 export default function Navbar({ blogRendered }) {
@@ -28,8 +33,12 @@ export default function Navbar({ blogRendered }) {
       <Toolbar>
         <Box width="100%" display="flex" justifyContent="space-between">
           <Box display="flex">
-            <Typography>Home</Typography>
-            <Typography>Blog</Typography>
+            <Link className={classes.links} to="/">
+              <Typography>Home</Typography>
+            </Link>
+            <Link className={classes.links} to="/blog">
+              <Typography>Blog</Typography>
+            </Link>
           </Box>
           <Box display="flex">
             {blogRendered ? <Typography>Sign in</Typography> : ""}

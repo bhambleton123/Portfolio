@@ -13,6 +13,7 @@ const skills = [
       "ReactJS",
       "Redux",
       "Global State Management",
+      "This is another skill",
     ],
   },
   {
@@ -60,7 +61,7 @@ export default function Skills({ scrollTo }) {
       width="97%"
     >
       <Typography variant="h4" color="primary">
-        <Box mt="20vh" mb="35px" textAlign="center" fontSize="40px">
+        <Box mt="8vh" mb="35px" textAlign="center" fontSize="40px">
           Skills
         </Box>
       </Typography>
