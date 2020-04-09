@@ -5,7 +5,7 @@ export default function Blog() {
   return (
     <Typography variant="h2" color="primary">
       <Box textAlign="center" mt="40px">
-        Welcome to my blog!
+        Cool articles I've written
       </Box>
     </Typography>
   );
