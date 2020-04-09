@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { Box, Typography, makeStyles, Button } from "@material-ui/core";
 import Projects from "./projects/projects";
 import Skills from "./skills/skills";
+import Contact from "./contact/contact";
 
 const useStyles = makeStyles({
   portfolio: {
@@ -59,6 +60,7 @@ export default function Portfolio() {
       <Box width="97%">
         <Projects />
       </Box>
+      <Contact />
     </>
   );
 }
