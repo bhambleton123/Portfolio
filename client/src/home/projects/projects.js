@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Typography, Box } from "@material-ui/core";
+import { Grid, Typography, Box, makeStyles } from "@material-ui/core";
 import ProjectCard from "./project-card";
 import Mandelbrot from "../../assets/mandelbrot.gif";
 import Sorting from "../../assets/sorting-algorithms.gif";
@@ -24,17 +24,33 @@ const projects = [
   },
 ];
 
+const useStlyes = makeStyles({
+  gridItem: {
+    marginLeft: "16px",
+  },
+  gridContents: {
+    width: "98%",
+    marginLeft: "10px",
+  },
+});
+
 export default function Projects() {
+  const classes = useStlyes();
   return (
     <>
       <Typography variant="h4" color="primary">
-        <Box textAlign="center" mb="20px" ml="30px" fontSize="3vw">
+        <Box textAlign="center" mb="20px" ml="30px" fontSize="40px">
           Some projects
         </Box>
       </Typography>
-      <Grid container spacing={4} justify="center">
+      <Grid
+        className={classes.gridContents}
+        container
+        spacing={4}
+        justify="center"
+      >
         {projects.map((project) => (
-          <Grid item>
+          <Grid className={classes.gridItem} item>
             <ProjectCard
               image={project.image}
               title={project.title}

@@ -57,6 +57,7 @@ export default function Skills({ scrollTo }) {
       display="flex"
       flexDirection="column"
       alignItems="center"
+      width="97%"
     >
       <Typography variant="h4" color="primary">
         <Box mt="20vh" mb="35px" textAlign="center" fontSize="40px">

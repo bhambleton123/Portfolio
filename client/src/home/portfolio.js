@@ -7,6 +7,12 @@ const useStyles = makeStyles({
   portfolio: {
     marginTop: "30vh",
   },
+  name: {
+    fontSize: "calc(20px + 2vw)",
+  },
+  description: {
+    fontSize: "calc(9px + 1vw)",
+  },
 });
 
 export default function Portfolio() {
@@ -32,10 +38,10 @@ export default function Portfolio() {
       >
         <Box display="flex" flexDirection="column" alignItems="center">
           <Typography variant="h2" color="primary">
-            <Box fontSize="4vw">Hi, I'm Brian Hambleton</Box>
+            <Box className={classes.name}>Hi, I'm Brian Hambleton</Box>
           </Typography>
           <Typography variant="h4" color="primary">
-            <Box fontSize="2vw">
+            <Box className={classes.description}>
               Competent web developer, fast learner, and just an all around good
               dude
             </Box>
@@ -50,7 +56,7 @@ export default function Portfolio() {
         </Button>
       </Box>
       <Skills scrollTo={projectsRef} />
-      <Box width="98%">
+      <Box width="97%">
         <Projects />
       </Box>
     </>
