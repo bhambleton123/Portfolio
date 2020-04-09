@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@material-ui/core";
 
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 const useStyles = makeStyles({
   appBar: {
@@ -26,9 +26,10 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Navbar({ blogRendered }) {
+export default function Navbar() {
   const classes = useStyles();
   let history = useHistory();
+  let location = useLocation();
 
   return (
     <AppBar className={classes.appBar} position="sticky">
@@ -40,7 +41,11 @@ export default function Navbar({ blogRendered }) {
             <Typography onClick={() => history.push("/blog")}>Blog</Typography>
           </Box>
           <Box display="flex">
-            {blogRendered ? <Typography>Sign in</Typography> : ""}
+            {location.pathname.split("/")[1] === "blog" ? (
+              <Typography>Sign in</Typography>
+            ) : (
+              ""
+            )}
           </Box>
         </Box>
       </Toolbar>

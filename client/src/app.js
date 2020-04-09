@@ -12,7 +12,7 @@ export default function App() {
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
       <BrowserRouter>
-        <Navbar blogRendered={false} />
+        <Navbar />
         <Switch>
           <Route path="/blog" component={Blog} />
           <Route path="/" component={Home} />
