@@ -22,4 +22,10 @@ const createUser = (req, res) => {
   });
 };
 
-module.exports = { createUser };
+const getUserByEmailTest = async (req, res) => {
+  await models.User.findAll({
+    where: { email: req.body.email },
+  }).then((user) => res.send(user));
+};
+
+module.exports = { createUser, getUserByEmailTest };

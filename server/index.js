@@ -4,13 +4,38 @@ const app = express();
 const port = 3001;
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
-const expressSession = require("express-session");
+const session = require("express-session");
+const redis = require("redis");
+const redisClient = redis.createClient();
+const redisStore = require("connect-redis")(session);
 const userRoutes = require("./routes/user");
+const passport = require("./auth/passport");
+
+redisClient.on("error", (err) => {
+  console.log(`Redis error: ${err}`);
+});
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(expressSession({ secret: process.env.SESSION_SECRET }));
+
+app.use(
+  session({
+    store: new redisStore({
+      host: "localhost",
+      port: 6379,
+      client: redisClient,
+      ttl: 259200,
+    }),
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 3 * 24 * 60 * 60 * 1000 },
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use("/api", userRoutes);
 
