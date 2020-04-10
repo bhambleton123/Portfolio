@@ -12,6 +12,7 @@ const createUser = (req, res) => {
         const newUser = await models.User.create({
           name: req.body.name,
           email: req.body.email,
+          accountType: req.body.accountType,
           password: hash,
         });
         res.send({ success: newUser });
@@ -22,10 +23,17 @@ const createUser = (req, res) => {
   });
 };
 
-const getUserByEmailTest = async (req, res) => {
-  await models.User.findAll({
-    where: { email: req.body.email },
-  }).then((user) => res.send(user));
+const loginUser = (req, res) => {
+  res.send({ "User logged in ": req.user });
 };
 
-module.exports = { createUser, getUserByEmailTest };
+const getCurrentUser = (req, res) => {
+  req.user ? res.send(req.user) : res.send("User not logged in");
+};
+
+const logoutUser = (req, res) => {
+  req.logout();
+  res.send("User logged out");
+};
+
+module.exports = { createUser, loginUser, getCurrentUser, logoutUser };
