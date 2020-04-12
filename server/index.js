@@ -8,8 +8,9 @@ const session = require("express-session");
 const redis = require("redis");
 const redisClient = redis.createClient();
 const redisStore = require("connect-redis")(session);
-const userRoutes = require("./routes/user");
 const passport = require("./auth/passport");
+const userRoutes = require("./routes/user");
+const postRoutes = require("./routes/post");
 
 redisClient.on("error", (err) => {
   console.log(`Redis error: ${err}`);
@@ -38,5 +39,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/api", userRoutes);
+app.use("/api/posts", postRoutes);
 
 app.listen(port, () => console.log(`Server listening on ${port}`));

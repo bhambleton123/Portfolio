@@ -4,10 +4,10 @@ const bcrypt = require("bcrypt");
 const User = require("../db/models").User;
 
 passport.use(
-  new LocalStrategy({ usernameField: "email" }, (email, password, done) => {
+  new LocalStrategy((username, password, done) => {
     User.findOne({
       where: {
-        email,
+        username,
       },
     })
       .then((user) => {
