@@ -48,4 +48,10 @@ const __filterOutPassword = (user) => {
   };
 };
 
-module.exports = { createUser, loginUser, getCurrentUser, logoutUser };
+module.exports = {
+  createUser,
+  loginUser,
+  getCurrentUser,
+  logoutUser,
+  __filterOutPassword,
+};

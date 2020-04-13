@@ -8,7 +8,6 @@ module.exports = {
       .then((hash) => {
         return queryInterface.bulkInsert("Users", [
           {
-            id: 1,
             firstName: "Brian",
             lastName: "Hambleton",
             username: "God",
@@ -17,7 +16,6 @@ module.exports = {
             updatedAt: new Date(),
           },
           {
-            id: 2,
             firstName: "John",
             lastName: "Doe",
             username: "johndoe",

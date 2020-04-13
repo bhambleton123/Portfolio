@@ -1,11 +1,19 @@
 require("dotenv").config();
 const Post = require("../db/models").Post;
+const User = require("../db/models").User;
 
 const getPosts = (req, res) => {
-  Post.findAll()
-    .then((posts) => {
-      res.send(posts);
-    })
+  Post.findAll({
+    include: [
+      {
+        model: User,
+        attributes: {
+          exclude: ["password"],
+        },
+      },
+    ],
+  })
+    .then((posts) => res.send(posts))
     .catch((err) => res.status(500).send(err));
 };
 
