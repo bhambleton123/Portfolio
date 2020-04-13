@@ -6,6 +6,7 @@ import Home from "./home/home";
 import Blog from "./blog/blog";
 import Navbar from "./navbar";
 import Footer from "./footer";
+import NotFound from "./not-found";
 
 export default function App() {
   return (
@@ -14,8 +15,9 @@ export default function App() {
       <BrowserRouter>
         <Navbar />
         <Switch>
-          <Route path="/blog" component={Blog} />
-          <Route path="/" component={Home} />
+          <Route exact path="/blog" component={Blog} />
+          <Route exact path="/" component={Home} />
+          <Route path="*" component={NotFound} />
         </Switch>
         <Footer />
       </BrowserRouter>
