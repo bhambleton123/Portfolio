@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Box, Typography } from "@material-ui/core";
+import { Box, Typography, Button } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+import { userContext } from "../context/user-context";
 import axios from "axios";
 import BlogPostHome from "./blog-post-home";
 
@@ -40,6 +41,17 @@ export default function Blog() {
             name={`${post.User.firstName} ${post.User.lastName}`}
           />
         ))}
+        <userContext.Consumer>
+          {(value) =>
+            value.User && value.User.username === "God" ? (
+              <Button variant="outlined" color="primary">
+                Create post
+              </Button>
+            ) : (
+              ""
+            )
+          }
+        </userContext.Consumer>
       </Box>
     </>
   );

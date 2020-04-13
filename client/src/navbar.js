@@ -35,33 +35,35 @@ export default function Navbar({ setUser }) {
   let history = useHistory();
   let location = useLocation();
   const [anchorEl, setAnchorEl] = useState(null);
-  const [signedIn, setSignedIn] = useState(true);
+  const [openMenu, setOpenMenu] = useState(false);
 
   const signOut = () => {
     axios
       .get("/api/logout")
       .then((res) => {
         setUser(false);
-        setSignedIn(false);
         history.push("/blog");
         console.log(res.data);
       })
       .catch((err) => console.error(err));
   };
 
+  const openMenuActions = (e) => {
+    setAnchorEl(e.currentTarget);
+    setOpenMenu(true);
+  };
+
   const signedInOrOut = (user) => {
     if (user) {
       return (
         <>
-          <Typography onClick={(e) => setAnchorEl(e.currentTarget)}>
-            {user.username}
-          </Typography>
+          <Typography onClick={openMenuActions}>{user.username}</Typography>
           <Menu
             id="user-menu"
             anchorEl={anchorEl}
             keepMounted
-            open={Boolean(anchorEl)}
-            onClose={() => setAnchorEl(null)}
+            open={openMenu}
+            onClose={() => setOpenMenu(false)}
           >
             <MenuItem onClick={signOut}>Logout</MenuItem>
           </Menu>
