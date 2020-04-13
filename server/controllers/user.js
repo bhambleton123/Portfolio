@@ -25,13 +25,13 @@ const createUser = (req, res) => {
 };
 
 const loginUser = (req, res) => {
-  res.send({ "User logged in ": __filterOutPassword(req.user) });
+  res.send({ User: __filterOutPassword(req.user) });
 };
 
 const getCurrentUser = (req, res) => {
   req.user
-    ? res.send(__filterOutPassword(req.user))
-    : res.send("User not logged in");
+    ? res.send({ User: __filterOutPassword(req.user) })
+    : res.send({ User: null });
 };
 
 const logoutUser = (req, res) => {

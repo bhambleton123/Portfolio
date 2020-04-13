@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Typography,
@@ -10,6 +10,8 @@ import {
   makeStyles,
   Link,
 } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
 
 const useStyles = makeStyles({
   button: {
@@ -17,8 +19,24 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SignIn() {
+export default function SignIn({ setUser }) {
   const classes = useStyles();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  let history = useHistory();
+  const login = () => {
+    axios
+      .post("/api/login", {
+        username,
+        password,
+      })
+      .then((res) => {
+        setUser(res.data);
+        history.push("/blog");
+      })
+      .catch((err) => console.error(err));
+  };
+
   return (
     <Box
       height="67vh"
@@ -33,13 +51,22 @@ export default function SignIn() {
       </Typography>
       <Box display="flex" flexDirection="column">
         <FormControl>
-          <InputLabel>Username</InputLabel>
-          <Input></Input>
+          <InputLabel>username</InputLabel>
+          <Input onChange={(e) => setUsername(e.target.value)}></Input>
         </FormControl>
         <FormControl>
-          <TextField type="password" label="password"></TextField>
+          <TextField
+            type="password"
+            label="password"
+            onChange={(e) => setPassword(e.target.value)}
+          ></TextField>
         </FormControl>
-        <Button className={classes.button} variant="outlined" color="primary">
+        <Button
+          onClick={login}
+          className={classes.button}
+          variant="outlined"
+          color="primary"
+        >
           Submit
         </Button>
         <Typography variant="body1" color="primary">
