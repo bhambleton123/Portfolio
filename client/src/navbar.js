@@ -42,6 +42,7 @@ export default function Navbar({ setUser }) {
       .get("/api/logout")
       .then((res) => {
         setUser(false);
+        setOpenMenu(false);
         history.push("/blog");
         console.log(res.data);
       })
@@ -55,13 +56,13 @@ export default function Navbar({ setUser }) {
 
   const signedInOrOut = (user) => {
     if (user) {
+      console.log(openMenu);
       return (
         <>
           <Typography onClick={openMenuActions}>{user.username}</Typography>
           <Menu
             id="user-menu"
             anchorEl={anchorEl}
-            keepMounted
             open={openMenu}
             onClose={() => setOpenMenu(false)}
           >
