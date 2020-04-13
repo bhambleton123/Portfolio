@@ -42,7 +42,9 @@ export default function Navbar() {
           </Box>
           <Box display="flex">
             {location.pathname.split("/")[1] === "blog" ? (
-              <Typography>Sign in</Typography>
+              <Typography onClick={() => history.push("/sign-in")}>
+                Sign in
+              </Typography>
             ) : (
               ""
             )}

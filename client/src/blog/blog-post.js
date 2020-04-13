@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Typography } from "@material-ui/core";
+import { Box, Typography, Card } from "@material-ui/core";
 import { useParams } from "react-router-dom";
 import ReactHtmlParser from "react-html-parser";
 import axios from "axios";
@@ -27,17 +27,23 @@ export default function BlogPost() {
         justifyContent="center"
         flexDirection="column"
       >
-        <Typography variant="h3" color="primary">
-          <Box textAlign="center">{post.title}</Box>
-        </Typography>
-        <Typography variant="body1" color="primary">
-          <Box textAlign="center">{post.description}</Box>
-        </Typography>
-        <Typography color="primary">
-          <Box mt="60px" mb="130px" textAlign="justify">
-            {ReactHtmlParser(post.content)}
-          </Box>
-        </Typography>
+        <Card variant="outlined">
+          <Typography variant="h3">
+            <Box textAlign="center" pl="30px" pr="30px">
+              {post.title}
+            </Box>
+          </Typography>
+          <Typography variant="body1" color="secondary">
+            <Box textAlign="center" pl="30px" pr="30px">
+              {post.description}
+            </Box>
+          </Typography>
+          <Typography>
+            <Box mt="60px" pl="30px" pr="30px" mb="130px" textAlign="justify">
+              {ReactHtmlParser(post.content)}
+            </Box>
+          </Typography>
+        </Card>
       </Box>
     </>
   );
