@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     "Post",
     {
       title: DataTypes.STRING,
+      description: DataTypes.TEXT,
       content: DataTypes.TEXT,
       userId: DataTypes.INTEGER,
     },
