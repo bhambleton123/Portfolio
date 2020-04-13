@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   AppBar,
   Toolbar,
   makeStyles,
   Box,
   Typography,
+  Menu,
+  MenuItem,
 } from "@material-ui/core";
+import { userContext } from "./context/user-context";
+import axios from "axios";
 
 import { useHistory, useLocation } from "react-router-dom";
 
@@ -26,31 +30,74 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Navbar() {
+export default function Navbar({ setUser }) {
   const classes = useStyles();
   let history = useHistory();
   let location = useLocation();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [signedIn, setSignedIn] = useState(true);
+
+  const signOut = () => {
+    axios
+      .get("/api/logout")
+      .then((res) => {
+        setUser(false);
+        setSignedIn(false);
+        history.push("/blog");
+        console.log(res.data);
+      })
+      .catch((err) => console.error(err));
+  };
+
+  const signedInOrOut = (user) => {
+    if (user) {
+      return (
+        <>
+          <Typography onClick={(e) => setAnchorEl(e.currentTarget)}>
+            {user.username}
+          </Typography>
+          <Menu
+            id="user-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={() => setAnchorEl(null)}
+          >
+            <MenuItem onClick={signOut}>Logout</MenuItem>
+          </Menu>
+        </>
+      );
+    } else {
+      return (
+        <Typography onClick={() => history.push("/sign-in")}>
+          Sign in
+        </Typography>
+      );
+    }
+  };
 
   return (
-    <AppBar className={classes.appBar} position="sticky">
-      <Toolbar>
-        <Box width="100%" display="flex" justifyContent="space-between">
-          <Box display="flex">
-            <Typography onClick={() => history.push("/")}>Home</Typography>
+    <userContext.Consumer>
+      {(value) => (
+        <AppBar className={classes.appBar} position="sticky">
+          <Toolbar>
+            <Box width="100%" display="flex" justifyContent="space-between">
+              <Box display="flex">
+                <Typography onClick={() => history.push("/")}>Home</Typography>
 
-            <Typography onClick={() => history.push("/blog")}>Blog</Typography>
-          </Box>
-          <Box display="flex">
-            {location.pathname.split("/")[1] === "blog" ? (
-              <Typography onClick={() => history.push("/sign-in")}>
-                Sign in
-              </Typography>
-            ) : (
-              ""
-            )}
-          </Box>
-        </Box>
-      </Toolbar>
-    </AppBar>
+                <Typography onClick={() => history.push("/blog")}>
+                  Blog
+                </Typography>
+              </Box>
+              <Box display="flex">
+                {location.pathname.split("/")[1] === "blog"
+                  ? signedInOrOut(value.User)
+                  : ""}
+              </Box>
+            </Box>
+          </Toolbar>
+        </AppBar>
+      )}
+    </userContext.Consumer>
   );
 }

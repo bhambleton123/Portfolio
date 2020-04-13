@@ -30,7 +30,7 @@ export default function App() {
       <CssBaseline />
       <BrowserRouter>
         <userContext.Provider value={user}>
-          <Navbar />
+          <Navbar setUser={setUser} />
           <Switch>
             <Route path="/blog/:postId" component={BlogPost} />
             <Route exact path="/blog" component={Blog} />
