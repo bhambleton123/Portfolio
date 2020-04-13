@@ -9,6 +9,7 @@ export default function Footer() {
       height: "80px",
       marginTop: "calc(5% + 60px)",
       left: 0,
+      bottom: 0,
       width: "100%",
       backgroundColor: grey[200],
       textAlign: "center",

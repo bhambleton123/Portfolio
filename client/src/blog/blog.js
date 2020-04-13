@@ -32,10 +32,11 @@ export default function Blog() {
         justifyContent="center"
         alignItems="center"
         mt="40px"
+        pb="200px"
       >
         {posts.map((post) => (
           <BlogPostHome
-            onClickFunc={() => history.push(`/blog/${post.id}`)}
+            onClickFunc={() => history.push(`/blog/post/${post.id}`)}
             title={post.title}
             description={post.description}
             name={`${post.User.firstName} ${post.User.lastName}`}
@@ -44,7 +45,11 @@ export default function Blog() {
         <userContext.Consumer>
           {(value) =>
             value.User && value.User.username === "God" ? (
-              <Button variant="outlined" color="primary">
+              <Button
+                onClick={() => history.push("/blog/create")}
+                variant="outlined"
+                color="primary"
+              >
                 Create post
               </Button>
             ) : (
