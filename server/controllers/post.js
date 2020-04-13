@@ -13,10 +13,31 @@ const getPosts = (req, res) => {
       },
     ],
     attributes: {
-      exclude: ["userId"],
+      exclude: ["content", "userId"],
     },
   })
     .then((posts) => res.send(posts))
+    .catch((err) => res.status(500).send(err));
+};
+
+const getPostById = (req, res) => {
+  Post.findOne({
+    where: {
+      id: req.params.postId,
+    },
+    attributes: {
+      exclude: ["userId"],
+    },
+    include: [
+      {
+        model: User,
+        attributes: {
+          exclude: ["password"],
+        },
+      },
+    ],
+  })
+    .then((post) => res.send(post))
     .catch((err) => res.status(500).send(err));
 };
 
@@ -74,4 +95,4 @@ const deletePost = (req, res) => {
   }
 };
 
-module.exports = { createPost, getPosts, editPost, deletePost };
+module.exports = { createPost, getPosts, getPostById, editPost, deletePost };

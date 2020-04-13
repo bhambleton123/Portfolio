@@ -6,6 +6,7 @@ import Home from "./home/home";
 import Blog from "./blog/blog";
 import Navbar from "./navbar";
 import Footer from "./footer";
+import BlogPost from "./blog/blog-post";
 import NotFound from "./not-found";
 
 export default function App() {
@@ -15,6 +16,7 @@ export default function App() {
       <BrowserRouter>
         <Navbar />
         <Switch>
+          <Route path="/blog/:postId" component={BlogPost} />
           <Route exact path="/blog" component={Blog} />
           <Route exact path="/" component={Home} />
           <Route path="*" component={NotFound} />
