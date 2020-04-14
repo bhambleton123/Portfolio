@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Box, Typography, Card, CircularProgress } from "@material-ui/core";
-import { useParams } from "react-router-dom";
+import {
+  Box,
+  Typography,
+  Card,
+  CircularProgress,
+  Button,
+} from "@material-ui/core";
+import DeleteIcon from "@material-ui/icons/Delete";
+import { useParams, useHistory } from "react-router-dom";
 import { Editor, convertFromRaw, EditorState } from "draft-js";
+import { userContext } from "../context/user-context";
 import axios from "axios";
 
 export default function BlogPost() {
   let { postId } = useParams();
   const [post, setPost] = useState({});
   const [postLoaded, setPostLoaded] = useState(false);
+  let history = useHistory();
 
   useEffect(() => {
     axios
@@ -18,6 +27,15 @@ export default function BlogPost() {
       })
       .catch((err) => console.error(err));
   }, []);
+
+  const deletePost = () => {
+    axios
+      .delete(`/api/posts/${postId}/delete`)
+      .then((res) => {
+        history.push("/blog");
+      })
+      .catch((err) => console.error(err));
+  };
 
   return postLoaded ? (
     <>
@@ -31,6 +49,24 @@ export default function BlogPost() {
         flexDirection="column"
       >
         <Card variant="outlined">
+          <userContext.Consumer>
+            {(value) =>
+              value.User && value.User.username === "God" ? (
+                <Box style={{ float: "right" }} mr="20px" mt="20px" mb="20px">
+                  <Button
+                    onClick={deletePost}
+                    width="100px"
+                    variant="contained"
+                    startIcon={<DeleteIcon />}
+                  >
+                    Delete
+                  </Button>
+                </Box>
+              ) : (
+                ""
+              )
+            }
+          </userContext.Consumer>
           <Typography variant="h3">
             <Box textAlign="center" pl="30px" pr="30px" pt="30px">
               {post.title}

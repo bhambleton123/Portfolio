@@ -7,6 +7,9 @@ import {
   makeStyles,
   Button,
   ButtonGroup,
+  FormControl,
+  TextField,
+  TextareaAutosize,
 } from "@material-ui/core";
 import FormatBoldIcon from "@material-ui/icons/FormatBold";
 import FormatItalicIcon from "@material-ui/icons/FormatItalic";
@@ -18,17 +21,36 @@ import axios from "axios";
 export default function BlogCreate() {
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+
   let history = useHistory();
 
   useEffect(() => {
-    axios.get("/api/user").then((res) => {
-      if (!res.data.User || res.data.User.username !== "God") {
-        history.push("/blog");
-      } else {
-        setIsAuthorized(true);
-      }
-    });
+    axios
+      .get("/api/user")
+      .then((res) => {
+        if (!res.data.User || res.data.User.username !== "God") {
+          history.push("/blog");
+        } else {
+          setIsAuthorized(true);
+        }
+      })
+      .catch((err) => console.error(err));
   }, []);
+
+  const submitPost = () => {
+    axios
+      .post("/api/posts/create", {
+        title,
+        description,
+        content: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
+      })
+      .then((res) => {
+        history.push("/blog");
+      })
+      .catch((err) => console.error(err));
+  };
 
   const handleKeyCommand = (command, editorState) => {
     const newState = RichUtils.handleKeyCommand(editorState, command);
@@ -59,7 +81,6 @@ export default function BlogCreate() {
   const code = (e) => {
     e.preventDefault();
     setEditorState(RichUtils.toggleInlineStyle(editorState, "CODE"));
-    console.log(JSON.stringify(convertToRaw(editorState.getCurrentContent())));
   };
 
   const classes = makeStyles({
@@ -78,6 +99,21 @@ export default function BlogCreate() {
         mt="200px"
         pb="200px"
       >
+        <Box display="flex" flexDirection="column" mb="10px">
+          <FormControl>
+            <TextField
+              onChange={(e) => setTitle(e.target.value)}
+              label="title"
+            />
+          </FormControl>
+          <FormControl margin="dense">
+            <TextareaAutosize
+              rows={5}
+              placeholder="Description"
+              onChange={(e) => setDescription(e.target.value)}
+            ></TextareaAutosize>
+          </FormControl>
+        </Box>
         <Card className={classes.card}>
           <ButtonGroup>
             <Button onMouseDown={bold}>
@@ -99,7 +135,11 @@ export default function BlogCreate() {
             handleKeyCommand={handleKeyCommand}
           />
         </Card>
-        <Button>Submit</Button>
+        <Box mt="10px">
+          <Button onClick={submitPost} variant="outlined">
+            Submit
+          </Button>
+        </Box>
       </Box>
     </>
   ) : (
