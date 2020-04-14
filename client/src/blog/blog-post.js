@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Box, Typography, Card, CircularProgress } from "@material-ui/core";
 import { useParams } from "react-router-dom";
-import ReactHtmlParser from "react-html-parser";
+import { Editor, convertFromRaw, EditorState } from "draft-js";
 import axios from "axios";
 
 export default function BlogPost() {
@@ -48,7 +48,12 @@ export default function BlogPost() {
           </Typography>
           <Typography>
             <Box mt="60px" pl="30px" pr="30px" mb="130px" textAlign="justify">
-              {ReactHtmlParser(post.content)}
+              <Editor
+                editorState={EditorState.createWithContent(
+                  convertFromRaw(JSON.parse(post.content))
+                )}
+                readOnly={true}
+              />
             </Box>
           </Typography>
         </Card>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Typography, Button } from "@material-ui/core";
+import { Box, Typography, Button, CircularProgress } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { userContext } from "../context/user-context";
 import axios from "axios";
@@ -7,6 +7,7 @@ import BlogPostHome from "./blog-post-home";
 
 export default function Blog() {
   const [posts, setPosts] = useState([]);
+  const [receivedPosts, setReceivedPosts] = useState(false);
   let history = useHistory();
 
   useEffect(() => {
@@ -14,12 +15,13 @@ export default function Blog() {
       .get("api/posts")
       .then((res) => {
         setPosts(res.data);
+        setReceivedPosts(true);
         console.log(res.data);
       })
       .catch((err) => console.error(err));
   }, []);
 
-  return (
+  return receivedPosts ? (
     <>
       <Typography variant="h2" color="primary">
         <Box textAlign="center" mt="40px">
@@ -59,5 +61,14 @@ export default function Blog() {
         </userContext.Consumer>
       </Box>
     </>
+  ) : (
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      height="90vh"
+    >
+      <CircularProgress />
+    </Box>
   );
 }

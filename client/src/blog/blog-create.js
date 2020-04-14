@@ -6,8 +6,13 @@ import {
   Card,
   makeStyles,
   Button,
+  ButtonGroup,
 } from "@material-ui/core";
-import { Editor, EditorState, RichUtils } from "draft-js";
+import FormatBoldIcon from "@material-ui/icons/FormatBold";
+import FormatItalicIcon from "@material-ui/icons/FormatItalic";
+import FormatUnderlinedIcon from "@material-ui/icons/FormatUnderlined";
+import CodeIcon from "@material-ui/icons/Code";
+import { Editor, EditorState, RichUtils, convertToRaw } from "draft-js";
 import axios from "axios";
 
 export default function BlogCreate() {
@@ -36,9 +41,25 @@ export default function BlogCreate() {
     return "not-handled";
   };
 
-  const bold = () => {
+  const bold = (e) => {
+    e.preventDefault();
     setEditorState(RichUtils.toggleInlineStyle(editorState, "BOLD"));
-    console.log(editorState);
+  };
+
+  const italic = (e) => {
+    e.preventDefault();
+    setEditorState(RichUtils.toggleInlineStyle(editorState, "ITALIC"));
+  };
+
+  const underline = (e) => {
+    e.preventDefault();
+    setEditorState(RichUtils.toggleInlineStyle(editorState, "UNDERLINE"));
+  };
+
+  const code = (e) => {
+    e.preventDefault();
+    setEditorState(RichUtils.toggleInlineStyle(editorState, "CODE"));
+    console.log(JSON.stringify(convertToRaw(editorState.getCurrentContent())));
   };
 
   const classes = makeStyles({
@@ -58,8 +79,20 @@ export default function BlogCreate() {
         pb="200px"
       >
         <Card className={classes.card}>
-          <Button onClick={bold}>Bold</Button>
-          <Button>Italics</Button>
+          <ButtonGroup>
+            <Button onMouseDown={bold}>
+              <FormatBoldIcon fontSize="small" />
+            </Button>
+            <Button onMouseDown={italic}>
+              <FormatItalicIcon fontSize="small" />
+            </Button>
+            <Button onMouseDown={underline}>
+              <FormatUnderlinedIcon fontSize="small" />
+            </Button>
+            <Button onMouseDown={code}>
+              <CodeIcon fontSize="small" />
+            </Button>
+          </ButtonGroup>
           <Editor
             editorState={editorState}
             onChange={setEditorState}
