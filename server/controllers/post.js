@@ -15,6 +15,7 @@ const getPosts = (req, res) => {
     attributes: {
       exclude: ["content", "userId"],
     },
+    order: [["updatedAt", "DESC"]],
   })
     .then((posts) => res.send(posts))
     .catch((err) => res.status(500).send(err));
