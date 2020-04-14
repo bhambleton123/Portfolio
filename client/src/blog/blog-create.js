@@ -10,6 +10,7 @@ import {
   FormControl,
   TextField,
   TextareaAutosize,
+  Typography,
 } from "@material-ui/core";
 import FormatBoldIcon from "@material-ui/icons/FormatBold";
 import FormatItalicIcon from "@material-ui/icons/FormatItalic";
@@ -96,9 +97,12 @@ export default function BlogCreate() {
         display="flex"
         flexDirection="column"
         alignItems="space-between"
-        mt="200px"
+        mt="75px"
         pb="200px"
       >
+        <Typography variant="h3" color="primary">
+          <Box>Create post</Box>
+        </Typography>
         <Box display="flex" flexDirection="column" mb="10px">
           <FormControl>
             <TextField
