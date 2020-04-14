@@ -48,25 +48,25 @@ export default function BlogPost() {
         justifyContent="center"
         flexDirection="column"
       >
+        <userContext.Consumer>
+          {(value) =>
+            value.User && value.User.username === "God" ? (
+              <Box style={{ float: "right" }} mr="20px" mt="20px" mb="20px">
+                <Button
+                  onClick={deletePost}
+                  width="100px"
+                  variant="contained"
+                  startIcon={<DeleteIcon />}
+                >
+                  Delete
+                </Button>
+              </Box>
+            ) : (
+              ""
+            )
+          }
+        </userContext.Consumer>
         <Card variant="outlined">
-          <userContext.Consumer>
-            {(value) =>
-              value.User && value.User.username === "God" ? (
-                <Box style={{ float: "right" }} mr="20px" mt="20px" mb="20px">
-                  <Button
-                    onClick={deletePost}
-                    width="100px"
-                    variant="contained"
-                    startIcon={<DeleteIcon />}
-                  >
-                    Delete
-                  </Button>
-                </Box>
-              ) : (
-                ""
-              )
-            }
-          </userContext.Consumer>
           <Typography variant="h3">
             <Box textAlign="center" pl="30px" pr="30px" pt="30px">
               {post.title}

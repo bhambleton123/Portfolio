@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -37,6 +37,16 @@ export default function SignIn({ setUser }) {
       .catch((err) => console.error(err));
   };
 
+  useEffect(() => {
+    axios
+      .get("/api/user")
+      .then((res) => {
+        if (res.data.User.username) {
+          history.push("/blog");
+        }
+      })
+      .catch((err) => console.error(err));
+  });
   return (
     <Box
       height="67vh"

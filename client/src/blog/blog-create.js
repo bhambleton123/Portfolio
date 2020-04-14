@@ -133,6 +133,7 @@ export default function BlogCreate() {
             editorState={editorState}
             onChange={setEditorState}
             handleKeyCommand={handleKeyCommand}
+            spellCheck={true}
           />
         </Card>
         <Box mt="10px">
