@@ -11,6 +11,7 @@ const redisStore = require("connect-redis")(session);
 const passport = require("./auth/passport");
 const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/post");
+const mailerRoutes = require("./routes/mailer");
 
 redisClient.on("error", (err) => {
   console.log(`Redis error: ${err}`);
@@ -40,5 +41,6 @@ app.use(passport.session());
 
 app.use("/api", userRoutes);
 app.use("/api/posts", postRoutes);
+app.use("/api", mailerRoutes);
 
 app.listen(port, () => console.log(`Server listening on ${port}`));

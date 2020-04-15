@@ -17,6 +17,7 @@ import "draft-js/dist/Draft.css";
 
 export default function App() {
   const [user, setUser] = useState({ User: {} });
+  
   useEffect(() => {
     axios
       .get("/api/user")

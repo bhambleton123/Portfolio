@@ -81,7 +81,6 @@ export default function BlogCreate() {
 
   const code = (e) => {
     e.preventDefault();
-    setEditorState(RichUtils.toggleInlineStyle(editorState, "CODE"));
   };
 
   const classes = makeStyles({
