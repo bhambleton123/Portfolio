@@ -63,6 +63,7 @@ export default function BlogCreate() {
         EditorState.push(editorState, newContentState, "change-block-data")
       );
     }
+    console.log(editorState);
   }, [editorState]);
 
   const submitPost = () => {

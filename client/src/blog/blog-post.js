@@ -8,14 +8,19 @@ import {
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { useParams, useHistory } from "react-router-dom";
-import { Editor, convertFromRaw, EditorState } from "draft-js";
+import { convertFromRaw, EditorState } from "draft-js";
+import Editor from "draft-js-plugins-editor";
 import { userContext } from "../context/user-context";
+import Prism from "prismjs";
+import createPrismPlugin from "draft-js-prism-plugin";
+import "prismjs/themes/prism.css";
 import axios from "axios";
 
 export default function BlogPost() {
   let { postId } = useParams();
   const [post, setPost] = useState({});
   const [postLoaded, setPostLoaded] = useState(false);
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
   let history = useHistory();
 
   useEffect(() => {
@@ -23,6 +28,11 @@ export default function BlogPost() {
       .get(`/api/posts/${postId}`)
       .then((res) => {
         setPost(res.data);
+        setEditorState(
+          EditorState.createWithContent(
+            convertFromRaw(JSON.parse(res.data.content))
+          )
+        );
         setPostLoaded(true);
       })
       .catch((err) => console.error(err));
@@ -84,12 +94,18 @@ export default function BlogPost() {
           </Typography>
           <Typography>
             <Box mt="60px" pl="30px" pr="30px" mb="130px" textAlign="justify">
+              {console.log(JSON.parse(post.content))}
               <Editor
-                editorState={EditorState.createWithContent(
-                  convertFromRaw(JSON.parse(post.content))
-                )}
+                editorState={editorState}
+                plugins={[
+                  createPrismPlugin({
+                    prism: Prism,
+                  }),
+                ]}
+                onChange={setEditorState}
                 readOnly={true}
               />
+              {console.log(editorState)}
             </Box>
           </Typography>
         </Card>
