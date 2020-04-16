@@ -3807,6 +3807,11 @@ dotenv@8.2.0:
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-8.2.0.tgz#97e619259ada750eea3e4ea3e26bceea5424b16a"
   integrity sha512-8sJ78ElpbDJBHNeBzUbUVLsqKdccaa/BXF1uPTw3GrvQTBgrQrtObr2mUrE38vzYd8cEv+m/JBfDLioYcfXoaw==
 
+draft-js-list-plugin@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/draft-js-list-plugin/-/draft-js-list-plugin-1.0.2.tgz#877ed5fde05f7f8963dc720398b3e8fcd2158dda"
+  integrity sha512-Vqz+JCZl96TBXoaHKeam1R90xxOWjTfpK9UFmXWP90CjCe/07bMmerZW3582JXsfQkmp5pC4sI3dhPSdr9WF9Q==
+
 draft-js-plugins-editor@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/draft-js-plugins-editor/-/draft-js-plugins-editor-3.0.0.tgz#196d1e065e2c29faebaab4ec081b734fdef294a2"

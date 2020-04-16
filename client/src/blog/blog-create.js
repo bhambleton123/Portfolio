@@ -20,6 +20,7 @@ import { EditorState, RichUtils, convertToRaw, Modifier } from "draft-js";
 import Editor from "draft-js-plugins-editor";
 import Prism from "prismjs";
 import createPrismPlugin from "draft-js-prism-plugin";
+import createListPlugin from "draft-js-list-plugin";
 import axios from "axios";
 
 export default function BlogCreate() {
@@ -184,6 +185,7 @@ export default function BlogCreate() {
               createPrismPlugin({
                 prism: Prism,
               }),
+              createListPlugin(),
             ]}
             onTab={onTab}
             spellCheck={true}
