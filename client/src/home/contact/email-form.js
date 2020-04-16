@@ -68,7 +68,7 @@ export default function EmailForm() {
         {sendSentAlert ? (
           <Alert severity="success">
             <AlertTitle>Success!</AlertTitle>
-            Your email was successfully sent! I'll get back to you soon at the
+            Your message was successfully sent! I'll get back to you soon at the
             email provided.
           </Alert>
         ) : (
