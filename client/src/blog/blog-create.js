@@ -16,43 +16,16 @@ import FormatBoldIcon from "@material-ui/icons/FormatBold";
 import FormatItalicIcon from "@material-ui/icons/FormatItalic";
 import FormatUnderlinedIcon from "@material-ui/icons/FormatUnderlined";
 import CodeIcon from "@material-ui/icons/Code";
-import {
-  Editor,
-  EditorState,
-  RichUtils,
-  convertToRaw,
-  CompositeDecorator,
-} from "draft-js";
-import CodeDecoratorComponent from "./code-decorator-component";
+import { EditorState, RichUtils, convertToRaw } from "draft-js";
+import Editor from "draft-js-plugins-editor";
+import Prism from "prismjs";
+import createPrismPlugin from "draft-js-prism-plugin";
+import "prismjs/themes/prism.css";
 import axios from "axios";
-
-const findWithRegex = (regex, contentBlock, callback) => {
-  const text = contentBlock.getText();
-  let matchArr, start;
-
-  while ((matchArr = regex.exec(text)) !== null) {
-    start = matchArr.index;
-    callback(start, start + matchArr[0].length);
-  }
-};
-
-const CODE_REGEX = /`(.*?)`/g;
-
-const codeStrategy = (contentBlock, callback, contentState) => {
-  findWithRegex(CODE_REGEX, contentBlock, callback);
-};
-const compositeDecorator = new CompositeDecorator([
-  {
-    strategy: codeStrategy,
-    component: CodeDecoratorComponent,
-  },
-]);
 
 export default function BlogCreate() {
   const [isAuthorized, setIsAuthorized] = useState(false);
-  const [editorState, setEditorState] = useState(
-    EditorState.createEmpty(compositeDecorator)
-  );
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
@@ -71,6 +44,27 @@ export default function BlogCreate() {
       .catch((err) => console.error(err));
   }, []);
 
+  useEffect(() => {
+    const selection = editorState.getSelection();
+    const block = editorState
+      .getCurrentContent()
+      .getBlockForKey(selection.getStartKey());
+    if (block.getType() === "code-block") {
+      const data = block.getData().merge({ language: "javascript" });
+      const newBlock = block.merge({ data });
+      const newContentState = editorState.getCurrentContent().merge({
+        blockMap: editorState
+          .getCurrentContent()
+          .getBlockMap()
+          .set(selection.getStartKey(), newBlock),
+        selectionAfter: selection,
+      });
+      setEditorState(
+        EditorState.push(editorState, newContentState, "change-block-data")
+      );
+    }
+  }, [editorState]);
+
   const submitPost = () => {
     axios
       .post("/api/posts/create", {
@@ -82,6 +76,10 @@ export default function BlogCreate() {
         history.push("/blog");
       })
       .catch((err) => console.error(err));
+  };
+
+  const onChange = (editorState) => {
+    setEditorState(editorState);
   };
 
   const handleKeyCommand = (command, editorState) => {
@@ -112,6 +110,8 @@ export default function BlogCreate() {
 
   const code = (e) => {
     e.preventDefault();
+
+    setEditorState(RichUtils.toggleCode(editorState));
   };
 
   const classes = makeStyles({
@@ -165,8 +165,13 @@ export default function BlogCreate() {
           </ButtonGroup>
           <Editor
             editorState={editorState}
-            onChange={setEditorState}
+            onChange={onChange}
             handleKeyCommand={handleKeyCommand}
+            plugins={[
+              createPrismPlugin({
+                prism: Prism,
+              }),
+            ]}
             spellCheck={true}
           />
         </Card>
