@@ -20,10 +20,6 @@ import { EditorState, RichUtils, convertToRaw, Modifier } from "draft-js";
 import Editor from "draft-js-plugins-editor";
 import Prism from "prismjs";
 import createPrismPlugin from "draft-js-prism-plugin";
-import createFocusPlugin from "draft-js-focus-plugin";
-import createAlignmentPlugin from "draft-js-alignment-plugin";
-import "draft-js-focus-plugin/lib/plugin.css";
-import "draft-js-alignment-plugin/lib/plugin.css";
 import axios from "axios";
 
 export default function BlogCreate() {
@@ -188,8 +184,6 @@ export default function BlogCreate() {
               createPrismPlugin({
                 prism: Prism,
               }),
-              createFocusPlugin(),
-              createAlignmentPlugin(),
             ]}
             onTab={onTab}
             spellCheck={true}
