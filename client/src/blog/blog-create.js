@@ -16,11 +16,14 @@ import FormatBoldIcon from "@material-ui/icons/FormatBold";
 import FormatItalicIcon from "@material-ui/icons/FormatItalic";
 import FormatUnderlinedIcon from "@material-ui/icons/FormatUnderlined";
 import CodeIcon from "@material-ui/icons/Code";
-import { EditorState, RichUtils, convertToRaw } from "draft-js";
+import { EditorState, RichUtils, convertToRaw, Modifier } from "draft-js";
 import Editor from "draft-js-plugins-editor";
 import Prism from "prismjs";
 import createPrismPlugin from "draft-js-prism-plugin";
-import "prismjs/themes/prism.css";
+import createFocusPlugin from "draft-js-focus-plugin";
+import createAlignmentPlugin from "draft-js-alignment-plugin";
+import "draft-js-focus-plugin/lib/plugin.css";
+import "draft-js-alignment-plugin/lib/plugin.css";
 import axios from "axios";
 
 export default function BlogCreate() {
@@ -63,7 +66,6 @@ export default function BlogCreate() {
         EditorState.push(editorState, newContentState, "change-block-data")
       );
     }
-    console.log(editorState);
   }, [editorState]);
 
   const submitPost = () => {
@@ -113,6 +115,20 @@ export default function BlogCreate() {
     e.preventDefault();
 
     setEditorState(RichUtils.toggleCode(editorState));
+  };
+
+  const onTab = (e) => {
+    e.preventDefault();
+
+    let newContentState = Modifier.replaceText(
+      editorState.getCurrentContent(),
+      editorState.getSelection(),
+      "    "
+    );
+
+    setEditorState(
+      EditorState.push(editorState, newContentState, "insert-characters")
+    );
   };
 
   const classes = makeStyles({
@@ -172,7 +188,10 @@ export default function BlogCreate() {
               createPrismPlugin({
                 prism: Prism,
               }),
+              createFocusPlugin(),
+              createAlignmentPlugin(),
             ]}
+            onTab={onTab}
             spellCheck={true}
           />
         </Card>
