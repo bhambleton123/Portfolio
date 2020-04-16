@@ -16,12 +16,43 @@ import FormatBoldIcon from "@material-ui/icons/FormatBold";
 import FormatItalicIcon from "@material-ui/icons/FormatItalic";
 import FormatUnderlinedIcon from "@material-ui/icons/FormatUnderlined";
 import CodeIcon from "@material-ui/icons/Code";
-import { Editor, EditorState, RichUtils, convertToRaw } from "draft-js";
+import {
+  Editor,
+  EditorState,
+  RichUtils,
+  convertToRaw,
+  CompositeDecorator,
+} from "draft-js";
+import CodeDecoratorComponent from "./code-decorator-component";
 import axios from "axios";
+
+const findWithRegex = (regex, contentBlock, callback) => {
+  const text = contentBlock.getText();
+  let matchArr, start;
+
+  while ((matchArr = regex.exec(text)) !== null) {
+    start = matchArr.index;
+    callback(start, start + matchArr[0].length);
+  }
+};
+
+const CODE_REGEX = /`(.*?)`/g;
+
+const codeStrategy = (contentBlock, callback, contentState) => {
+  findWithRegex(CODE_REGEX, contentBlock, callback);
+};
+const compositeDecorator = new CompositeDecorator([
+  {
+    strategy: codeStrategy,
+    component: CodeDecoratorComponent,
+  },
+]);
 
 export default function BlogCreate() {
   const [isAuthorized, setIsAuthorized] = useState(false);
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [editorState, setEditorState] = useState(
+    EditorState.createEmpty(compositeDecorator)
+  );
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
