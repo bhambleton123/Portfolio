@@ -38,6 +38,7 @@ export default function Blog() {
       >
         {posts.map((post) => (
           <BlogPostHome
+            key={post.id}
             onClickFunc={() => history.push(`/blog/post/${post.id}`)}
             title={post.title}
             description={post.description}

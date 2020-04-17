@@ -30,8 +30,8 @@ export default function BlogPostHome({
               <Box>{title}</Box>
               <Box fontSize="20px">by {name}</Box>
             </Typography>
-            <Typography variant="p">
-              <Box>{description}</Box>
+            <Typography color="secondary">
+              <Box fontSize="16px">{description}</Box>
             </Typography>
           </CardContent>
         </CardActionArea>

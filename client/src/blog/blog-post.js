@@ -92,22 +92,18 @@ export default function BlogPost() {
               {post.description}
             </Box>
           </Typography>
-          <Typography>
-            <Box mt="60px" pl="30px" pr="30px" mb="130px" textAlign="justify">
-              {console.log(JSON.parse(post.content))}
-              <Editor
-                editorState={editorState}
-                plugins={[
-                  createPrismPlugin({
-                    prism: Prism,
-                  }),
-                ]}
-                onChange={setEditorState}
-                readOnly={true}
-              />
-              {console.log(editorState)}
-            </Box>
-          </Typography>
+          <Box mt="60px" pl="30px" pr="30px" mb="130px" textAlign="justify">
+            <Editor
+              editorState={editorState}
+              plugins={[
+                createPrismPlugin({
+                  prism: Prism,
+                }),
+              ]}
+              onChange={setEditorState}
+              readOnly={true}
+            />
+          </Box>
         </Card>
       </Box>
     </>
