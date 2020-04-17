@@ -58,7 +58,7 @@ export default function Projects() {
         justify="center"
       >
         {projects.map((project) => (
-          <Grid className={classes.gridItem} item>
+          <Grid key="title" className={classes.gridItem} item>
             <ProjectCard
               image={project.image}
               title={project.title}

@@ -6,7 +6,9 @@ import {
   CardContent,
   makeStyles,
   CardMedia,
+  IconButton,
 } from "@material-ui/core";
+import CloseIcon from "@material-ui/icons/Close";
 
 export default function ProjectCardModal({
   image,
@@ -42,10 +44,10 @@ export default function ProjectCardModal({
   console.log(image);
   const classes = useStyles();
   return (
-    <Box onClick={handleClose} className={classes.modal}>
+    <Box className={classes.modal}>
       <Card className={classes.content}>
         <CardContent>
-          <Typography variant="h3">
+          <Typography variant="h4">
             <Box textAlign="center" fontWeight={300}>
               {title}
             </Box>
@@ -64,6 +66,11 @@ export default function ProjectCardModal({
             </Box>
           </Typography>
         </CardContent>
+        <Box display="flex" justifyContent="center" mb="20px">
+          <IconButton onClick={handleClose}>
+            <CloseIcon />
+          </IconButton>
+        </Box>
       </Card>
     </Box>
   );

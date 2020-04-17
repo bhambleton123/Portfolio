@@ -11,9 +11,10 @@ const skills = [
       "CSS",
       "JavaScript",
       "ReactJS",
+      "React Hooks",
       "Redux",
-      "Global State Management",
-      "This is another skill",
+      "Material-UI",
+      "Bootstrap",
     ],
   },
   {
