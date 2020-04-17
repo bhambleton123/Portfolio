@@ -35,7 +35,7 @@ export default function ProjectCardModal({
     },
     media: {
       width: "100%",
-      height: "35vw",
+      height: "36.5vw",
     },
   });
 
@@ -44,12 +44,24 @@ export default function ProjectCardModal({
   return (
     <Box onClick={handleClose} className={classes.modal}>
       <Card className={classes.content}>
+        <CardContent>
+          <Typography variant="h3">
+            <Box textAlign="center" fontWeight={300}>
+              {title}
+            </Box>
+          </Typography>
+        </CardContent>
         <Box width="100%" display="flex" justifyContent="center">
           <CardMedia image={image} title={title} className={classes.media} />
         </Box>
         <CardContent>
-          <Typography>
+          <Typography color="secondary">
             <Box textAlign="center">{description}</Box>
+          </Typography>
+          <Typography>
+            <Box mt="20px" textAlign="justify">
+              {longerDescription}
+            </Box>
           </Typography>
         </CardContent>
       </Card>
