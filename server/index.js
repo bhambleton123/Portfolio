@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
-const port = 3001;
+const port = 80;
 const https = require("https");
 const fs = require("fs");
 const path = require("path");
