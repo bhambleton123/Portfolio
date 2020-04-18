@@ -100,12 +100,20 @@ const deletePost = (req, res) => {
   if (!req.user || req.user.username !== process.env.ADMIN_USERNAME) {
     res.status(401).send("User unauthorized to delete post");
   } else {
-    Post.destroy({
+    Comment.destroy({
       where: {
-        id: req.params.postId,
+        postId: req.params.postId,
       },
     })
-      .then((post) => res.send(`Post ${req.params.postId} deleted`))
+      .then((comment) => {
+        Post.destroy({
+          where: {
+            id: req.params.postId,
+          },
+        })
+          .then((post) => res.send(`Post ${req.params.postId} deleted`))
+          .catch((err) => res.status(500).send(err));
+      })
       .catch((err) => res.status(500).send(err));
   }
 };
