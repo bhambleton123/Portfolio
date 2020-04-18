@@ -4,7 +4,7 @@ import Skill from "./skill";
 
 export default function SkillsSection({ name, skillNames }) {
   return (
-    <Box display="flex" flexDirection="column" width="37%">
+    <Box display="flex" flexDirection="column" width="37%" mt="20px">
       <Typography color="primary">
         <Box textAlign="center" fontSize="30px" mb="10px">
           {name}

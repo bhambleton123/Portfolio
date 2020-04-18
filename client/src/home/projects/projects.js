@@ -61,23 +61,25 @@ export default function Projects() {
           Applications
         </Box>
       </Typography>
-      <Grid
-        className={classes.gridContents}
-        container
-        spacing={4}
-        justify="center"
-      >
-        {projects.map((project, index) => (
-          <Grid key={index} className={classes.gridItem} item>
-            <ProjectCard
-              image={project.image}
-              title={project.title}
-              description={project.description}
-              longerDescription={project.longerDescription}
-            />
-          </Grid>
-        ))}
-      </Grid>
+      <Box pl="20px">
+        <Grid
+          className={classes.gridContents}
+          container
+          spacing={4}
+          justify="center"
+        >
+          {projects.map((project, index) => (
+            <Grid key={index} className={classes.gridItem} item>
+              <ProjectCard
+                image={project.image}
+                title={project.title}
+                description={project.description}
+                longerDescription={project.longerDescription}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
     </>
   );
 }

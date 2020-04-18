@@ -25,6 +25,7 @@ const skills = [
       "PHP",
       "Laravel",
       "RESTful API's",
+      "OAuth",
       "PostgreSQL",
       "MySQL",
       "MongoDB",
@@ -36,15 +37,17 @@ const skills = [
   {
     name: "other",
     skills: [
-      "Docker",
       "AWS",
-      "Microservices",
       "Monolithic Architecture",
       "Version Control",
-      "Github",
+      "Git",
       "Agile",
       "Gitflow",
     ],
+  },
+  {
+    name: "learning",
+    skills: ["Docker", "Microservices", "Python (Flask)", "Ruby on Rails"],
   },
 ];
 
