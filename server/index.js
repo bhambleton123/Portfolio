@@ -2,6 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const port = 3001;
+const https = require("https");
+const fs = require("fs");
 const path = require("path");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -48,4 +50,12 @@ app.use("/api/posts", postRoutes);
 app.use("/api", mailerRoutes);
 app.use("/api", commentsRoutes);
 
-app.listen(port, () => console.log(`Server listening on ${port}`));
+https
+  .createServer(
+    {
+      key: fs.readFileSync("server.key"),
+      cert: fs.readFileSync("server.cert"),
+    },
+    app
+  )
+  .listen(port, () => console.log(`Server over https on port ${port}`));
