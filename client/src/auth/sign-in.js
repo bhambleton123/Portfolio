@@ -23,8 +23,13 @@ export default function SignIn({ setUser }) {
   const classes = useStyles();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
+  const [helperText, setHelperText] = useState("");
   let history = useHistory();
-  const login = () => {
+
+  const login = (e) => {
+    e.preventDefault();
+
     axios
       .post("/api/login", {
         username,
@@ -34,7 +39,12 @@ export default function SignIn({ setUser }) {
         setUser(res.data);
         history.push("/blog");
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        if (err.response.status === 401 || err.response.status === 500) {
+          setError(true);
+          setHelperText("Invalid username or password");
+        }
+      });
   };
 
   useEffect(() => {
@@ -60,35 +70,44 @@ export default function SignIn({ setUser }) {
       <Typography variant="h3" color="primary">
         <Box>Sign In</Box>
       </Typography>
-      <Box display="flex" flexDirection="column">
-        <FormControl>
-          <InputLabel>username</InputLabel>
-          <Input onChange={(e) => setUsername(e.target.value)}></Input>
-        </FormControl>
-        <FormControl>
-          <TextField
-            type="password"
-            label="password"
-            onChange={(e) => setPassword(e.target.value)}
-          ></TextField>
-        </FormControl>
-        <Button
-          onClick={login}
-          className={classes.button}
-          variant="outlined"
-          color="primary"
-        >
-          Submit
-        </Button>
-        <Typography variant="body1" color="primary">
-          <Box textAlign="justify">
-            Don't have an account? Register{" "}
-            <Link color="secondary" href="/register">
-              here
-            </Link>
-          </Box>
-        </Typography>
-      </Box>
+      <form noValidate onSubmit={login}>
+        <Box display="flex" flexDirection="column">
+          <FormControl>
+            <TextField
+              error={error}
+              helperText={helperText}
+              label="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </FormControl>
+          <FormControl>
+            <TextField
+              error={error}
+              type="password"
+              label="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            ></TextField>
+          </FormControl>
+          <Button
+            type="submit"
+            className={classes.button}
+            variant="outlined"
+            color="primary"
+          >
+            Submit
+          </Button>
+          <Typography variant="body1" color="primary">
+            <Box textAlign="justify">
+              Don't have an account? Register{" "}
+              <Link color="secondary" href="/register">
+                here
+              </Link>
+            </Box>
+          </Typography>
+        </Box>
+      </form>
     </Box>
   );
 }

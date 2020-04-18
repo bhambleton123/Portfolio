@@ -42,7 +42,7 @@ export default function BlogPostComment({
             <Box>{content}</Box>
           </Typography>
           <Typography color="secondary">
-            <Box fontSize="14px">
+            <Box fontSize="14px" mb="-15px">
               Posted on {new Date(createdAt).toDateString()}
             </Box>
           </Typography>
