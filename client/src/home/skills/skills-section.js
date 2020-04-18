@@ -2,8 +2,6 @@ import React from "react";
 import { Box, Typography, makeStyles } from "@material-ui/core";
 import Skill from "./skill";
 
-const useStyles = makeStyles({});
-
 export default function SkillsSection({ name, skillNames }) {
   return (
     <Box display="flex" flexDirection="column" width="37%">
@@ -13,8 +11,8 @@ export default function SkillsSection({ name, skillNames }) {
         </Box>
       </Typography>
       <Box>
-        {skillNames.map((skillName) => (
-          <Skill name={skillName} />
+        {skillNames.map((skillName, index) => (
+          <Skill key={index} name={skillName} />
         ))}
       </Box>
     </Box>

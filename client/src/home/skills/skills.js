@@ -73,9 +73,10 @@ export default function Skills({ scrollTo }) {
         alignItems="center"
         spacing={1}
       >
-        {skills.map((skill) => {
+        {skills.map((skill, index) => {
           return (
             <Box
+              key={index}
               width="500px"
               display="flex"
               justifyContent="center"

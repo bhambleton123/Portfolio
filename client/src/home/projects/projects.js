@@ -57,8 +57,8 @@ export default function Projects() {
         spacing={4}
         justify="center"
       >
-        {projects.map((project) => (
-          <Grid key="title" className={classes.gridItem} item>
+        {projects.map((project, index) => (
+          <Grid key={index} className={classes.gridItem} item>
             <ProjectCard
               image={project.image}
               title={project.title}
