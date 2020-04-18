@@ -43,8 +43,7 @@ export default function Portfolio() {
           </Typography>
           <Typography variant="h4" color="primary">
             <Box className={classes.description}>
-              Competent web developer, fast learner, and just an all around good
-              dude
+              Software developer with a passion for learning new technologies
             </Box>
           </Typography>
         </Box>
