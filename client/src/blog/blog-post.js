@@ -14,6 +14,7 @@ import { userContext } from "../context/user-context";
 import Prism from "prismjs";
 import createPrismPlugin from "draft-js-prism-plugin";
 import "prismjs/themes/prism.css";
+import BlogPostComment from "./blog-post-comment";
 import axios from "axios";
 
 export default function BlogPost() {
@@ -105,6 +106,19 @@ export default function BlogPost() {
             />
           </Box>
         </Card>
+        <Typography variant="h3" color="primary">
+          <Box mt="20px" textAlign="center">
+            Comments
+          </Box>
+        </Typography>
+        {post.Comments.map((comment) => (
+          <BlogPostComment
+            key={comment.id}
+            firstName={comment.User.firstName}
+            lastName={comment.User.lastName}
+            content={comment.content}
+          />
+        ))}
       </Box>
     </>
   ) : (
