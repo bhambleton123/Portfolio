@@ -7,9 +7,9 @@ import {
   Button,
   makeStyles,
   Link,
-  Alert,
-  AlertTitle,
 } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
+import AlertTitle from "@material-ui/lab/AlertTitle";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 
@@ -24,7 +24,11 @@ export default function SignUp() {
   const classes = useStyles();
 
   const [firstName, setFirstName] = useState("");
+  const [firstNameError, setFirstNameError] = useState(false);
+  const [firstNameErrorText, setFirstNameErrorText] = useState("");
   const [lastName, setLastName] = useState("");
+  const [lastNameError, setLastNameError] = useState(false);
+  const [lastNameErrorText, setLastNameErrorText] = useState("");
   const [username, setUsername] = useState("");
   const [usernameError, setUsernameError] = useState(false);
   const [usernameErrorText, setUsernameErrorText] = useState("");
@@ -46,10 +50,55 @@ export default function SignUp() {
       .catch((err) => console.error(err));
   }, []);
 
+  const __removeErrors = () => {
+    setUsernameError(false);
+    setUsernameErrorText("");
+    setPasswordError(false);
+    setPasswordErrorText("");
+    setFirstNameError(false);
+    setFirstNameErrorText("");
+    setLastNameError(false);
+    setLastNameErrorText("");
+  };
+
+  const __clearInfo = () => {
+    setFirstName("");
+    setLastName("");
+    setUsername("");
+    setPassword("");
+    setPasswordConfirm("");
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
 
+    __removeErrors();
+
     // Handle form validation
+    if (firstName.length === 0) {
+      setFirstNameError(true);
+      setFirstNameErrorText("First name must not be blank");
+    }
+
+    if (lastName.length === 0) {
+      setFirstNameError(true);
+      setFirstNameErrorText("Last name must not be blank");
+    }
+
+    if (/[^A-Za-z]/.test(firstName)) {
+      setFirstNameError(true);
+      setFirstNameErrorText(
+        "First name must contain only letters and no white space"
+      );
+    }
+
+    if (/[^A-Za-z]/.test(lastName)) {
+      setLastNameError(true);
+      setLastNameErrorText(
+        "Last name must contain only letters and no white space"
+      );
+    }
+
     if (password !== passwordConfirm) {
       setPasswordError(true);
       setPasswordErrorText("Passwords must match");
@@ -83,6 +132,7 @@ export default function SignUp() {
           .then((res) => {
             setSendingAlert(false);
             setSentAlert(true);
+            __clearInfo();
           })
           .catch((err) => {
             if (err.response.status === 422) {
@@ -111,6 +161,8 @@ export default function SignUp() {
           <FormControl>
             <TextField
               required
+              error={firstNameError}
+              helperText={firstNameErrorText}
               label="First Name"
               onChange={(e) => setFirstName(e.target.value)}
             />
@@ -118,6 +170,8 @@ export default function SignUp() {
           <FormControl>
             <TextField
               required
+              error={lastNameError}
+              helperText={lastNameErrorText}
               label="Last Name"
               onChange={(e) => setLastName(e.target.value)}
             />
@@ -169,6 +223,22 @@ export default function SignUp() {
           </Typography>
         </Box>
       </form>
+      {sendingAlert ? (
+        <Alert severity="info">
+          <AlertTitle>Creating account...</AlertTitle>
+          Currently busy creating your account
+        </Alert>
+      ) : (
+        ""
+      )}
+      {sentAlert ? (
+        <Alert severity="success">
+          <AlertTitle>Success!</AlertTitle>
+          Your account was successfully created.
+        </Alert>
+      ) : (
+        ""
+      )}
     </Box>
   );
 }

@@ -23,6 +23,16 @@ const createUser = (req, res) => {
     });
   }
 
+  if (
+    /[^A-Za-z]/.test(req.body.firstName) ||
+    /[^A-Za-z]/.test(req.body.lastName)
+  ) {
+    res.status(400).send({
+      error:
+        "First and last names must contain only letters and no white space",
+    });
+  }
+
   bcrypt.hash(req.body.password, saltRounds, async (err, hash) => {
     if (err) {
       res.status(500).send(err);
