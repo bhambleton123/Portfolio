@@ -1,6 +1,7 @@
 require("dotenv").config();
 const Post = require("../db/models").Post;
 const User = require("../db/models").User;
+const Comment = require("../db/models").Comment;
 
 const getPosts = (req, res) => {
   Post.findAll({
@@ -35,6 +36,18 @@ const getPostById = (req, res) => {
         attributes: {
           exclude: ["password"],
         },
+      },
+      {
+        model: Comment,
+        attributes: ["id", "content"],
+        include: [
+          {
+            model: User,
+            attributes: {
+              exclude: ["password"],
+            },
+          },
+        ],
       },
     ],
   })
