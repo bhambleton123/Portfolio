@@ -32,9 +32,6 @@ export default function OtherOptions() {
         <Link href="https://www.linkedin.com/in/brian-hambleton/">
           <LinkedInIcon color="primary" />
         </Link>
-        <Link href="https://www.facebook.com/bhambl3ton">
-          <FacebookIcon color="primary" />
-        </Link>
         <Link href="mailto:bhambl3t0n1@gmail.com">
           <EmailIcon color="primary" />
         </Link>

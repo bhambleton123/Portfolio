@@ -11,13 +11,14 @@ import Footer from "./footer";
 import BlogPost from "./blog/blog-post";
 import BlogCreate from "./blog/blog-create";
 import SignIn from "./auth/sign-in";
+import SignUp from "./auth/sign-up";
 import NotFound from "./not-found";
 import "./body.css";
 import "draft-js/dist/Draft.css";
 
 export default function App() {
   const [user, setUser] = useState({ User: {} });
-  
+
   useEffect(() => {
     axios
       .get("/api/user")
@@ -39,6 +40,7 @@ export default function App() {
             <Route exact path="/blog/create" component={BlogCreate} />
             <Route exact path="/blog/post/:postId" component={BlogPost} />
             <Route exact path="/blog" component={Blog} />
+            <Route exact path="/register" component={SignUp} />
             <Route
               exact
               path="/sign-in"

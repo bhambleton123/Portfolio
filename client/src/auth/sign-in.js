@@ -46,7 +46,7 @@ export default function SignIn({ setUser }) {
         }
       })
       .catch((err) => console.error(err));
-  });
+  }, []);
 
   return (
     <Box

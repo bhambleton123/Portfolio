@@ -48,7 +48,7 @@ export default function Projects() {
     <>
       <Typography variant="h4" color="primary">
         <Box textAlign="center" mb="20px" ml="30px" fontSize="40px">
-          Some projects
+          Applications
         </Box>
       </Typography>
       <Grid
