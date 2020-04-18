@@ -19,6 +19,7 @@ export default function BlogPostHome({
   description,
   name,
   onClickFunc,
+  createdAt,
 }) {
   const classes = useStyles();
   return (
@@ -28,7 +29,9 @@ export default function BlogPostHome({
           <CardContent>
             <Typography variant="h4">
               <Box>{title}</Box>
-              <Box fontSize="20px">by {name}</Box>
+              <Box fontSize="20px">
+                by {name} - {new Date(createdAt).toDateString()}
+              </Box>
             </Typography>
             <Typography color="secondary">
               <Box fontSize="16px">{description}</Box>

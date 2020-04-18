@@ -9,6 +9,7 @@ export default function BlogPostComment({
   commentId,
   content,
   userId,
+  createdAt,
   deleteComment,
 }) {
   return (
@@ -39,6 +40,11 @@ export default function BlogPostComment({
           </Typography>
           <Typography>
             <Box>{content}</Box>
+          </Typography>
+          <Typography color="secondary">
+            <Box fontSize="14px">
+              Posted on {new Date(createdAt).toDateString()}
+            </Box>
           </Typography>
         </CardContent>
       </Card>

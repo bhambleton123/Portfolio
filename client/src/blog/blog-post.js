@@ -128,6 +128,11 @@ export default function BlogPost() {
               readOnly={true}
             />
           </Box>
+          <Typography color="secondary">
+            <Box ml="20px" mb="10px" fontSize="14px">
+              Last updated on {new Date(post.updatedAt).toDateString()}
+            </Box>
+          </Typography>
         </Card>
         <Typography variant="h3" color="primary">
           <Box mt="20px" textAlign="center">
@@ -161,6 +166,7 @@ export default function BlogPost() {
             firstName={comment.User.firstName}
             lastName={comment.User.lastName}
             content={comment.content}
+            createdAt={comment.createdAt}
             deleteComment={deleteComment}
           />
         ))}

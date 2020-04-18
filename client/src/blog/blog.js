@@ -42,6 +42,7 @@ export default function Blog() {
             onClickFunc={() => history.push(`/blog/post/${post.id}`)}
             title={post.title}
             description={post.description}
+            createdAt={post.createdAt}
             name={`${post.User.firstName} ${post.User.lastName}`}
           />
         ))}
