@@ -1,3 +1,4 @@
+require("dotenv").config();
 const Comment = require("../db/models").Comment;
 
 const createComment = (req, res) => {
@@ -43,17 +44,30 @@ const deleteComment = (req, res) => {
   if (!req.user) {
     res.status(401).send("Unauthorized");
   } else {
-    Comment.destroy({
-      where: {
-        id: req.params.commentId,
-        userId: req.user.id,
-        postId: req.params.postId,
-      },
-    })
-      .then((comment) => {
-        res.send({ deleted: comment });
+    if (req.user.username === process.env.ADMIN_USERNAME) {
+      Comment.destroy({
+        where: {
+          id: req.params.commentId,
+          postId: req.params.postId,
+        },
       })
-      .catch((err) => res.status(500).send(err));
+        .then((comment) => {
+          res.send({ deleted: comment });
+        })
+        .catch((err) => res.status(500).send(err));
+    } else {
+      Comment.destroy({
+        where: {
+          id: req.params.commentId,
+          userId: req.user.id,
+          postId: req.params.postId,
+        },
+      })
+        .then((comment) => {
+          res.send({ deleted: comment });
+        })
+        .catch((err) => res.status(500).send(err));
+    }
   }
 };
 

@@ -22,6 +22,7 @@ export default function BlogPost() {
   const [post, setPost] = useState({});
   const [postLoaded, setPostLoaded] = useState(false);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [pressedDelete, setPressedDelete] = useState(false);
   let history = useHistory();
 
   useEffect(() => {
@@ -37,13 +38,22 @@ export default function BlogPost() {
         setPostLoaded(true);
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [pressedDelete]);
 
   const deletePost = () => {
     axios
       .delete(`/api/posts/${postId}/delete`)
       .then((res) => {
         history.push("/blog");
+      })
+      .catch((err) => console.error(err));
+  };
+
+  const deleteComment = (commentId) => {
+    axios
+      .delete(`/api/post/${post.id}/comment/${commentId}`)
+      .then((res) => {
+        setPressedDelete(!pressedDelete);
       })
       .catch((err) => console.error(err));
   };
@@ -60,22 +70,22 @@ export default function BlogPost() {
         flexDirection="column"
       >
         <userContext.Consumer>
-          {(value) =>
-            value.User && value.User.username === "God" ? (
-              <Box style={{ float: "right" }} mr="20px" mt="20px" mb="20px">
-                <Button
-                  onClick={deletePost}
-                  width="100px"
-                  variant="contained"
-                  startIcon={<DeleteIcon />}
-                >
-                  Delete
-                </Button>
-              </Box>
-            ) : (
-              ""
-            )
-          }
+          {(value) => {
+            if (value.User && value.User.username === "God") {
+              return (
+                <Box style={{ float: "right" }} mr="20px" mt="20px" mb="20px">
+                  <Button
+                    onClick={deletePost}
+                    width="100px"
+                    variant="contained"
+                    startIcon={<DeleteIcon />}
+                  >
+                    Delete
+                  </Button>
+                </Box>
+              );
+            }
+          }}
         </userContext.Consumer>
         <Card variant="outlined">
           <Typography variant="h3">
@@ -111,12 +121,15 @@ export default function BlogPost() {
             Comments
           </Box>
         </Typography>
-        {post.Comments.map((comment) => (
+        {post.Comments.map((comment, index) => (
           <BlogPostComment
-            key={comment.id}
+            key={index}
+            userId={comment.User.id}
+            commentId={comment.id}
             firstName={comment.User.firstName}
             lastName={comment.User.lastName}
             content={comment.content}
+            deleteComment={deleteComment}
           />
         ))}
       </Box>
