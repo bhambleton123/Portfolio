@@ -53,14 +53,14 @@ app.get("*", (req, res) =>
   res.sendFile(path.join(__dirname, "../client/build/index.html"))
 );
 
-app.listen(port, () => console.log(`Serving on port ${port}`));
+// app.listen(port, () => console.log(`Serving on port ${port}`));
 
-// https
-//   .createServer(
-//     {
-//       key: fs.readFileSync("server.key"),
-//       cert: fs.readFileSync("server.cert"),
-//     },
-//     app
-//   )
-//   .listen(443, () => console.log(`Server over https on port ${port}`));
+https
+  .createServer(
+    {
+      key: fs.readFileSync("server.key"),
+      cert: fs.readFileSync("server.cert"),
+    },
+    app
+  )
+  .listen(port, () => console.log(`Server over https on port ${port}`));
