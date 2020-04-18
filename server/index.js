@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
-const port = 80;
+const port = 3000;
 const https = require("https");
 const fs = require("fs");
 const path = require("path");
@@ -49,13 +49,18 @@ app.use("/api", userRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api", mailerRoutes);
 app.use("/api", commentsRoutes);
+app.get("*", (req, res) =>
+  res.sendFile(path.join(__dirname, "../client/build/index.html"))
+);
 
-https
-  .createServer(
-    {
-      key: fs.readFileSync("server.key"),
-      cert: fs.readFileSync("server.cert"),
-    },
-    app
-  )
-  .listen(port, () => console.log(`Server over https on port ${port}`));
+app.listen(port, () => console.log(`Serving on port ${port}`));
+
+// https
+//   .createServer(
+//     {
+//       key: fs.readFileSync("server.key"),
+//       cert: fs.readFileSync("server.cert"),
+//     },
+//     app
+//   )
+//   .listen(443, () => console.log(`Server over https on port ${port}`));
