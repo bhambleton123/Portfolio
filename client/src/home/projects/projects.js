@@ -4,8 +4,18 @@ import ProjectCard from "./project-card";
 import Mandelbrot from "../../assets/mandelbrot.gif";
 import Sorting from "../../assets/sorting-algorithms.gif";
 import BookClub from "../../assets/book_club.gif";
+import Blog from "../../assets/blog.gif";
 
 const projects = [
+  {
+    image: Blog,
+    title: "Portfolio Blog",
+    description: "Application for creating blog posts, and more...",
+    longerDescription: `I built this portfolio along with the blog with the help of a UI library called Material-UI, React Hooks, React context API for 
+    storing information on the user logged in, Draft.js to create the text editor for creating posts, PostgreSQL for storing data, Node and Express for most of the back
+    end, Redis for user sessions, etc. It was super fun, and one of my more fleshed out projects that I spent time making responsive with CSS. I'll also be 
+    going into more depth on this in a blog post later to come.`,
+  },
   {
     image: Sorting,
     title: "Sorting Algorithm Visualizer",
