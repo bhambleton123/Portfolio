@@ -5,6 +5,7 @@ import {
   Card,
   CircularProgress,
   Button,
+  Link,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { useParams, useHistory } from "react-router-dom";
@@ -15,6 +16,7 @@ import Prism from "prismjs";
 import createPrismPlugin from "draft-js-prism-plugin";
 import "prismjs/themes/prism.css";
 import BlogPostComment from "./blog-post-comment";
+import BlogPostCommentCreate from "./blog-post-comment-create";
 import axios from "axios";
 
 export default function BlogPost() {
@@ -22,7 +24,7 @@ export default function BlogPost() {
   const [post, setPost] = useState({});
   const [postLoaded, setPostLoaded] = useState(false);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
-  const [pressedDelete, setPressedDelete] = useState(false);
+  const [commentChange, setCommentChange] = useState(false);
   let history = useHistory();
 
   useEffect(() => {
@@ -38,7 +40,18 @@ export default function BlogPost() {
         setPostLoaded(true);
       })
       .catch((err) => console.error(err));
-  }, [pressedDelete]);
+  }, [commentChange]);
+
+  const postComment = (content) => {
+    axios
+      .post(`/api/post/${postId}/comment`, {
+        content,
+      })
+      .then((res) => {
+        setCommentChange(!commentChange);
+      })
+      .catch((err) => console.error(err));
+  };
 
   const deletePost = () => {
     axios
@@ -53,7 +66,7 @@ export default function BlogPost() {
     axios
       .delete(`/api/post/${post.id}/comment/${commentId}`)
       .then((res) => {
-        setPressedDelete(!pressedDelete);
+        setCommentChange(!commentChange);
       })
       .catch((err) => console.error(err));
   };
@@ -121,6 +134,25 @@ export default function BlogPost() {
             Comments
           </Box>
         </Typography>
+        <userContext.Consumer>
+          {(value) =>
+            value.User ? (
+              <Box display="flex" justifyContent="center">
+                <BlogPostCommentCreate postComment={postComment} />
+              </Box>
+            ) : (
+              <Typography color="primary">
+                <Box>
+                  Want to post a comment? Register{" "}
+                  <Link color="secondary" href="/register">
+                    here
+                  </Link>
+                  , no email necessary!
+                </Box>
+              </Typography>
+            )
+          }
+        </userContext.Consumer>
         {post.Comments.map((comment, index) => (
           <BlogPostComment
             key={index}

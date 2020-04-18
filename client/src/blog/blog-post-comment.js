@@ -11,30 +11,29 @@ export default function BlogPostComment({
   userId,
   deleteComment,
 }) {
-  console.log(userId, "hello");
   return (
     <Box mt="20px">
+      <userContext.Consumer>
+        {(value) =>
+          (value.User && value.User.id === userId) ||
+          (value.User && value.User.username === "God") ? (
+            <Box display="flex" justifyContent="flex-end" mb="10px">
+              <Button
+                onClick={() => deleteComment(commentId)}
+                startIcon={<DeleteIcon />}
+                variant="outlined"
+                color="primary"
+              >
+                Delete
+              </Button>
+            </Box>
+          ) : (
+            ""
+          )
+        }
+      </userContext.Consumer>
       <Card>
         <CardContent>
-          <userContext.Consumer>
-            {(value) =>
-              (value.User && value.User.id === userId) ||
-              (value.User && value.User.username === "God") ? (
-                <Box display="flex" justifyContent="flex-end">
-                  <Button
-                    onClick={() => deleteComment(commentId)}
-                    startIcon={<DeleteIcon />}
-                    variant="outlined"
-                    color="secondary"
-                  >
-                    Delete
-                  </Button>
-                </Box>
-              ) : (
-                ""
-              )
-            }
-          </userContext.Consumer>
           <Typography>
             <Box fontWeight="bold">{`${firstName} ${lastName}`}</Box>
           </Typography>
