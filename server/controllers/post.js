@@ -39,7 +39,7 @@ const getPostById = (req, res) => {
       },
       {
         model: Comment,
-        attributes: ["id", "content"],
+        attributes: ["id", "content", "createdAt", "updatedAt"],
         include: [
           {
             model: User,
@@ -50,6 +50,7 @@ const getPostById = (req, res) => {
         ],
       },
     ],
+    order: [[Comment, "updatedAt", "DESC"]],
   })
     .then((post) => res.send(post))
     .catch((err) => res.status(500).send(err));

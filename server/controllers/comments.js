@@ -1,25 +1,64 @@
 const Comment = require("../db/models").Comment;
-const User = require("../db/models").User;
 
-const getCommentsByPostId = (req, res) => {
-  Comment.findAll({
-    include: [
+const createComment = (req, res) => {
+  if (!req.user) {
+    res.status(401).send("Unauthorized");
+  } else {
+    Comment.create({
+      content: req.body.content,
+      postId: req.params.postId,
+      userId: req.user.id,
+    })
+      .then((comment) => {
+        res.send({ created: comment });
+      })
+      .catch((err) => {
+        res.status(500).send(err);
+      });
+  }
+};
+
+const updateComment = (req, res) => {
+  if (!req.user) {
+    res.status(401).send("Unauthorized");
+  } else {
+    Comment.update(
+      { content: req.body.content },
       {
-        model: User,
-        attributes: {
-          exclude: ["password"],
+        where: {
+          id: req.params.commentId,
+          userId: req.user.id,
+          postId: req.params.postId,
         },
+      }
+    )
+      .then((comment) => {
+        res.send({ updated: comment });
+      })
+      .catch((err) => res.status(500).send(err));
+  }
+};
+
+const deleteComment = (req, res) => {
+  if (!req.user) {
+    res.status(401).send("Unauthorized");
+  } else {
+    Comment.destroy({
+      where: {
+        id: req.params.commentId,
+        userId: req.user.id,
+        postId: req.params.postId,
       },
-    ],
-    attributes: {
-      exclude: ["userId"],
-    },
-    order: [["updatedAt", "DESC"]],
-  })
-    .then((comments) => res.send(comments))
-    .catch((err) => res.status(500).send(err));
+    })
+      .then((comment) => {
+        res.send({ deleted: comment });
+      })
+      .catch((err) => res.status(500).send(err));
+  }
 };
 
 module.exports = {
-  getCommentsByPostId,
+  createComment,
+  updateComment,
+  deleteComment,
 };
