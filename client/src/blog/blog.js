@@ -16,7 +16,6 @@ export default function Blog() {
       .then((res) => {
         setPosts(res.data);
         setReceivedPosts(true);
-        console.log(res.data);
       })
       .catch((err) => console.error(err));
   }, []);
@@ -25,7 +24,7 @@ export default function Blog() {
     <>
       <Typography variant="h2" color="primary">
         <Box textAlign="center" mt="40px">
-          Cool articles I've written
+          Articles I've written
         </Box>
       </Typography>
       <Box
