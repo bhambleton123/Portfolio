@@ -39,7 +39,9 @@ export default function BlogPost() {
         );
         setPostLoaded(true);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        history.push("/404");
+      });
   }, [commentChange]);
 
   const postComment = (content) => {
