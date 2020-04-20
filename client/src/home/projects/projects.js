@@ -61,11 +61,11 @@ export default function Projects() {
           Applications
         </Box>
       </Typography>
-      <Box pl="20px">
+      <Box>
         <Grid
           className={classes.gridContents}
           container
-          spacing={4}
+          spacing={5}
           justify="center"
         >
           {projects.map((project, index) => (
