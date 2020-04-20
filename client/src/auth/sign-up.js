@@ -136,6 +136,7 @@ export default function SignUp() {
           })
           .catch((err) => {
             if (err.response.status === 422) {
+              setSendingAlert(false);
               setUsernameError(true);
               setUsernameErrorText("Username already taken");
             }
@@ -236,6 +237,14 @@ export default function SignUp() {
         <Alert severity="success">
           <AlertTitle>Success!</AlertTitle>
           Your account was successfully created.
+        </Alert>
+      ) : (
+        ""
+      )}
+      {firstNameError || lastNameError || usernameError || passwordError ? (
+        <Alert severity="error">
+          <AlertTitle>Error...</AlertTitle>
+          Please fix the errors above
         </Alert>
       ) : (
         ""
