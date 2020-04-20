@@ -147,7 +147,7 @@ export default function SignUp() {
   return (
     <Box
       height="67vh"
-      mt="30px"
+      mt="60px"
       mb="20px"
       display="flex"
       flexDirection="column"
