@@ -13,7 +13,6 @@ export default function OtherOptions() {
       alignItems="center"
       flexDirection="column"
       mt="30px"
-      pb="200px"
     >
       <Typography variant="h5" color="primary">
         <Box textAlign="center" mt="25px">
