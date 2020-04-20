@@ -60,6 +60,7 @@ export default function SignIn({ setUser }) {
     <Box
       height="67vh"
       mt="30px"
+      mb="20px"
       display="flex"
       flexDirection="column"
       justifyContent="center"
