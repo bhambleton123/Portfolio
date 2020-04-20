@@ -1,8 +1,10 @@
 import React from "react";
 import { Typography, Box, makeStyles } from "@material-ui/core";
 import { grey } from "@material-ui/core/colors";
+import { useLocation } from "react-router-dom";
 
 export default function Footer() {
+  const location = useLocation();
   const useStyles = makeStyles({
     footer: {
       position: "absolute",
@@ -16,7 +18,8 @@ export default function Footer() {
     },
   });
   const classes = useStyles();
-  return (
+  return location.pathname !== "/sign-in" &&
+    location.pathname !== "/register" ? (
     <Box component="footer" className={classes.footer}>
       <Box
         display="flex"
@@ -28,5 +31,7 @@ export default function Footer() {
         Brian Hambleton © 2020
       </Box>
     </Box>
+  ) : (
+    ""
   );
 }
