@@ -20,7 +20,7 @@ const projects = [
     image: Sorting,
     title: "Sorting Algorithm Visualizer",
     description: "Application for viewing sorting algorithms with rectangles",
-    longerDescription: `I build a sorting algorithm visualizer with React using rectangles that swap and turn red when swapped. 
+    longerDescription: `I built a sorting algorithm visualizer with React using rectangles that swap and turn red when swapped. 
     This project helped me gain a deeper understanding of a couple different basic soriting algorithms and how to display them happening asynchronously in a 
     visual manner`,
   },
