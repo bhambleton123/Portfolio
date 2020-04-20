@@ -78,11 +78,13 @@ export default function SignUp() {
     if (firstName.length === 0) {
       setFirstNameError(true);
       setFirstNameErrorText("First name must not be blank");
+      return;
     }
 
     if (lastName.length === 0) {
       setFirstNameError(true);
       setFirstNameErrorText("Last name must not be blank");
+      return;
     }
 
     if (/[^A-Za-z]/.test(firstName)) {
@@ -90,6 +92,7 @@ export default function SignUp() {
       setFirstNameErrorText(
         "First name must contain only letters and no white space"
       );
+      return;
     }
 
     if (/[^A-Za-z]/.test(lastName)) {
@@ -97,6 +100,7 @@ export default function SignUp() {
       setLastNameErrorText(
         "Last name must contain only letters and no white space"
       );
+      return;
     }
 
     if (password !== passwordConfirm) {
