@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams, useLocation } from "react-router-dom";
 import {
   CircularProgress,
   Box,
@@ -16,20 +16,28 @@ import FormatBoldIcon from "@material-ui/icons/FormatBold";
 import FormatItalicIcon from "@material-ui/icons/FormatItalic";
 import FormatUnderlinedIcon from "@material-ui/icons/FormatUnderlined";
 import CodeIcon from "@material-ui/icons/Code";
-import { EditorState, RichUtils, convertToRaw, Modifier } from "draft-js";
+import {
+  EditorState,
+  RichUtils,
+  convertToRaw,
+  convertFromRaw,
+  Modifier,
+} from "draft-js";
 import Editor from "draft-js-plugins-editor";
 import Prism from "prismjs";
 import createPrismPlugin from "draft-js-prism-plugin";
 import createListPlugin from "draft-js-list-plugin";
 import axios from "axios";
 
-export default function BlogCreate() {
+export default function BlogEditor() {
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
   let history = useHistory();
+  let { postId } = useParams();
+  let location = useLocation();
 
   useEffect(() => {
     axios
@@ -42,6 +50,23 @@ export default function BlogCreate() {
         }
       })
       .catch((err) => console.error(err));
+
+    if (location.pathname.split("/")[2] === "update") {
+      axios
+        .get(`/api/posts/${postId}`)
+        .then((res) => {
+          setEditorState(
+            EditorState.createWithContent(
+              convertFromRaw(JSON.parse(res.data.content))
+            )
+          );
+          setTitle(res.data.title);
+          setDescription(res.data.description);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
   }, []);
 
   useEffect(() => {
@@ -64,6 +89,23 @@ export default function BlogCreate() {
       );
     }
   }, [editorState]);
+
+  const submit = () => {
+    location.pathname.split("/")[2] === "update" ? updatePost() : submitPost();
+  };
+
+  const updatePost = () => {
+    axios
+      .put(`/api/posts/${postId}/edit`, {
+        title,
+        description,
+        content: JSON.stringify(convertToRaw(editorState.getCurrentContent())),
+      })
+      .then((res) => {
+        history.push(`/blog/post/${postId}`);
+      })
+      .catch((err) => console.error(err));
+  };
 
   const submitPost = () => {
     axios
@@ -152,6 +194,7 @@ export default function BlogCreate() {
             <TextField
               onChange={(e) => setTitle(e.target.value)}
               label="title"
+              value={title}
             />
           </FormControl>
           <FormControl margin="dense">
@@ -159,6 +202,7 @@ export default function BlogCreate() {
               rows={5}
               placeholder="Description"
               onChange={(e) => setDescription(e.target.value)}
+              value={description}
             ></TextareaAutosize>
           </FormControl>
         </Box>
@@ -192,8 +236,8 @@ export default function BlogCreate() {
           />
         </Card>
         <Box mt="10px">
-          <Button onClick={submitPost} variant="outlined">
-            Submit
+          <Button onClick={submit} variant="outlined">
+            {location.pathname.split("/")[2] === "update" ? "Update" : "Submit"}
           </Button>
         </Box>
       </Box>

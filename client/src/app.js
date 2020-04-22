@@ -9,7 +9,7 @@ import Blog from "./blog/blog";
 import Navbar from "./navbar";
 import Footer from "./footer";
 import BlogPost from "./blog/blog-post";
-import BlogCreate from "./blog/blog-create";
+import BlogEditor from "./blog/blog-editor";
 import SignIn from "./auth/sign-in";
 import SignUp from "./auth/sign-up";
 import NotFound from "./not-found";
@@ -37,7 +37,8 @@ export default function App() {
         <userContext.Provider value={user}>
           <Navbar setUser={setUser} />
           <Switch>
-            <Route exact path="/blog/create" component={BlogCreate} />
+            <Route exact path="/blog/create" component={BlogEditor} />
+            <Route exact path="/blog/update/:postId" component={BlogEditor} />
             <Route exact path="/blog/post/:postId" component={BlogPost} />
             <Route exact path="/blog" component={Blog} />
             <Route exact path="/register" component={SignUp} />
