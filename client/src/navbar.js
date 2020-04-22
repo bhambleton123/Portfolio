@@ -44,7 +44,6 @@ export default function Navbar({ setUser }) {
         setUser(false);
         setOpenMenu(false);
         history.push("/blog");
-        console.log(res.data);
       })
       .catch((err) => console.error(err));
   };
@@ -56,7 +55,6 @@ export default function Navbar({ setUser }) {
 
   const signedInOrOut = (user) => {
     if (user) {
-      console.log(openMenu);
       return (
         <>
           <Typography onClick={openMenuActions}>{user.username}</Typography>

@@ -2,6 +2,7 @@ require("dotenv").config();
 const Post = require("../db/models").Post;
 const User = require("../db/models").User;
 const Comment = require("../db/models").Comment;
+const AWS = require("../util/aws-config");
 
 const getPosts = (req, res) => {
   Post.findAll({
@@ -73,6 +74,31 @@ const createPost = (req, res) => {
   }
 };
 
+const uploadAndReceiveImage = (req, res) => {
+  let s3 = new AWS.S3();
+
+  let data = {
+    Bucket: process.env.AWS_S3_BUCKET,
+    Body: req.file.buffer,
+    ContentEncoding: "base64",
+    ContentType: "image/*",
+    Key: `blog_images/${req.file.originalname}`,
+  };
+
+  s3.putObject(data, (err, data) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.send(
+        s3.getSignedUrl("getObject", {
+          Bucket: process.env.AWS_S3_BUCKET,
+          Key: `blog_images/${req.file.originalname}`,
+        })
+      );
+    }
+  });
+};
+
 const editPost = (req, res) => {
   if (!req.user || req.user.username !== process.env.ADMIN_USERNAME) {
     res.status(401).send("User unauthorized to edit post");
@@ -118,4 +144,11 @@ const deletePost = (req, res) => {
   }
 };
 
-module.exports = { createPost, getPosts, getPostById, editPost, deletePost };
+module.exports = {
+  createPost,
+  getPosts,
+  getPostById,
+  uploadAndReceiveImage,
+  editPost,
+  deletePost,
+};

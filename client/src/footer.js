@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography, Box, makeStyles } from "@material-ui/core";
+import { Box, makeStyles } from "@material-ui/core";
 import { grey } from "@material-ui/core/colors";
 import { useLocation } from "react-router-dom";
 

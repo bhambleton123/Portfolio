@@ -41,7 +41,6 @@ export default function ProjectCardModal({
     },
   });
 
-  console.log(image);
   const classes = useStyles();
   return (
     <Box className={classes.modal}>

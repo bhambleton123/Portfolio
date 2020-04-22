@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, makeStyles } from "@material-ui/core";
+import { Box, Typography } from "@material-ui/core";
 import Skill from "./skill";
 
 export default function SkillsSection({ name, skillNames }) {

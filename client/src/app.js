@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { MuiThemeProvider, CssBaseline, Box } from "@material-ui/core";
+import { MuiThemeProvider, CssBaseline } from "@material-ui/core";
 import { theme } from "./themes/main";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { userContext } from "./context/user-context";
