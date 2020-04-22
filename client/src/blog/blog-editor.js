@@ -187,7 +187,11 @@ export default function BlogEditor() {
         pb="200px"
       >
         <Typography variant="h3" color="primary">
-          <Box>Create post</Box>
+          <Box>
+            {location.pathname.split("/")[2] === "update"
+              ? "Update Post"
+              : "Create Post"}
+          </Box>
         </Typography>
         <Box display="flex" flexDirection="column" mb="10px">
           <FormControl>
