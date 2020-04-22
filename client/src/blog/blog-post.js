@@ -8,6 +8,7 @@ import {
   Link,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
 import { useParams, useHistory } from "react-router-dom";
 import { convertFromRaw, EditorState } from "draft-js";
 import Editor from "draft-js-plugins-editor";
@@ -64,6 +65,10 @@ export default function BlogPost() {
       .catch((err) => console.error(err));
   };
 
+  const updatePost = () => {
+    history.push(`/blog/update/${postId}`);
+  };
+
   const deleteComment = (commentId) => {
     axios
       .delete(`/api/post/${post.id}/comment/${commentId}`)
@@ -88,11 +93,21 @@ export default function BlogPost() {
           {(value) => {
             if (value.User && value.User.username === "God") {
               return (
-                <Box style={{ float: "right" }} mr="20px" mt="20px" mb="20px">
+                <Box display="flex" mr="20px" mt="20px" mb="20px">
+                  <Button
+                    style={{ marginRight: "10px" }}
+                    onClick={updatePost}
+                    width="100px"
+                    variant="outlined"
+                    color="primary"
+                    startIcon={<EditIcon />}
+                  >
+                    Edit
+                  </Button>
                   <Button
                     onClick={deletePost}
                     width="100px"
-                    variant="contained"
+                    variant="outlined"
                     startIcon={<DeleteIcon />}
                   >
                     Delete
