@@ -36,7 +36,39 @@ import createToolbarPlugin from "draft-js-static-toolbar-plugin";
 import "draft-js-image-plugin/lib/plugin.css";
 import "draft-js-alignment-plugin/lib/plugin.css";
 import "draft-js-focus-plugin/lib/plugin.css";
+import "draft-js-static-toolbar-plugin/lib/plugin.css";
 import axios from "axios";
+
+const prismPlugin = createPrismPlugin({
+  prism: Prism,
+});
+const listPlugin = createListPlugin();
+const focusPlugin = createFocusPlugin();
+const alignmentPlugin = createAlignmentPlugin();
+const resizeablePlugin = createResizeablePlugin();
+const toolbarPlugin = createToolbarPlugin();
+
+const { AlignmentTool } = alignmentPlugin;
+
+const decorator = composeDecorators(
+  focusPlugin.decorator,
+  alignmentPlugin.decorator,
+  resizeablePlugin.decorator
+);
+
+const imagePlugin = createImagePlugin({
+  decorator,
+});
+
+const plugins = [
+  toolbarPlugin,
+  prismPlugin,
+  listPlugin,
+  focusPlugin,
+  alignmentPlugin,
+  resizeablePlugin,
+  imagePlugin,
+];
 
 export default function BlogEditor() {
   const [isAuthorized, setIsAuthorized] = useState(false);
@@ -306,24 +338,11 @@ export default function BlogEditor() {
             editorState={editorState}
             onChange={onChange}
             handleKeyCommand={handleKeyCommand}
-            plugins={[
-              createPrismPlugin({
-                prism: Prism,
-              }),
-              createListPlugin(),
-              createFocusPlugin(),
-              createAlignmentPlugin(),
-              createToolbarPlugin(),
-              createImagePlugin({
-                decorator: composeDecorators(
-                  createFocusPlugin().decorator,
-                  createAlignmentPlugin().decorator
-                ),
-              }),
-            ]}
+            plugins={plugins}
             onTab={onTab}
             spellCheck={true}
           />
+          <AlignmentTool />
         </Card>
         <Box mt="10px">
           <Button onClick={submit} variant="outlined">
