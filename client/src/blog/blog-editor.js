@@ -32,7 +32,10 @@ import createImagePlugin from "draft-js-image-plugin";
 import createAlignmentPlugin from "draft-js-alignment-plugin";
 import createResizeablePlugin from "draft-js-resizeable-plugin";
 import createFocusPlugin from "draft-js-focus-plugin";
+import createToolbarPlugin from "draft-js-static-toolbar-plugin";
+import "draft-js-image-plugin/lib/plugin.css";
 import "draft-js-alignment-plugin/lib/plugin.css";
+import "draft-js-focus-plugin/lib/plugin.css";
 import axios from "axios";
 
 export default function BlogEditor() {
@@ -310,6 +313,7 @@ export default function BlogEditor() {
               createListPlugin(),
               createFocusPlugin(),
               createAlignmentPlugin(),
+              createToolbarPlugin(),
               createImagePlugin({
                 decorator: composeDecorators(
                   createFocusPlugin().decorator,

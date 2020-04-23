@@ -93,6 +93,7 @@ const uploadAndReceiveImage = (req, res) => {
         s3.getSignedUrl("getObject", {
           Bucket: process.env.AWS_S3_BUCKET,
           Key: `blog_images/${req.file.originalname}`,
+          Expires: 157784760,
         })
       );
     }
