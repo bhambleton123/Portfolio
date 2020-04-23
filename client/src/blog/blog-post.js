@@ -19,11 +19,8 @@ import createImagePlugin from "draft-js-image-plugin";
 import createAlignmentPlugin from "draft-js-alignment-plugin";
 import createResizeablePlugin from "draft-js-resizeable-plugin";
 import createFocusPlugin from "draft-js-focus-plugin";
-import createToolbarPlugin from "draft-js-static-toolbar-plugin";
 import "draft-js-image-plugin/lib/plugin.css";
 import "draft-js-alignment-plugin/lib/plugin.css";
-import "draft-js-focus-plugin/lib/plugin.css";
-import "draft-js-static-toolbar-plugin/lib/plugin.css";
 import "prismjs/themes/prism.css";
 import BlogPostComment from "./blog-post-comment";
 import BlogPostCommentCreate from "./blog-post-comment-create";
@@ -35,7 +32,6 @@ const prismPlugin = createPrismPlugin({
 const focusPlugin = createFocusPlugin();
 const alignmentPlugin = createAlignmentPlugin();
 const resizeablePlugin = createResizeablePlugin();
-const toolbarPlugin = createToolbarPlugin();
 
 const decorator = composeDecorators(
   focusPlugin.decorator,
@@ -47,14 +43,7 @@ const imagePlugin = createImagePlugin({
   decorator,
 });
 
-const plugins = [
-  toolbarPlugin,
-  prismPlugin,
-  focusPlugin,
-  alignmentPlugin,
-  resizeablePlugin,
-  imagePlugin,
-];
+const plugins = [prismPlugin, alignmentPlugin, resizeablePlugin, imagePlugin];
 
 export default function BlogPost() {
   let { postId } = useParams();
