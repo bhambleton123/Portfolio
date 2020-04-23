@@ -24,11 +24,15 @@ import {
   Modifier,
   AtomicBlockUtils,
 } from "draft-js";
-import Editor from "draft-js-plugins-editor";
+import Editor, { composeDecorators } from "draft-js-plugins-editor";
 import Prism from "prismjs";
 import createPrismPlugin from "draft-js-prism-plugin";
 import createListPlugin from "draft-js-list-plugin";
 import createImagePlugin from "draft-js-image-plugin";
+import createAlignmentPlugin from "draft-js-alignment-plugin";
+import createResizeablePlugin from "draft-js-resizeable-plugin";
+import createFocusPlugin from "draft-js-focus-plugin";
+import "draft-js-alignment-plugin/lib/plugin.css";
 import axios from "axios";
 
 export default function BlogEditor() {
@@ -158,8 +162,8 @@ export default function BlogEditor() {
           const contentState = editorState.getCurrentContent();
           const selection = editorState.getSelection();
           const contentStateWithEntity = contentState.createEntity(
-            "image",
-            "MUTABLE",
+            "IMAGE",
+            "IMMUTABLE",
             {
               src: res.data,
             }
@@ -227,6 +231,7 @@ export default function BlogEditor() {
   const classes = makeStyles({
     card: {
       width: "70vw",
+      minHeight: "60vh",
     },
   })();
 
@@ -303,7 +308,14 @@ export default function BlogEditor() {
                 prism: Prism,
               }),
               createListPlugin(),
-              createImagePlugin(),
+              createFocusPlugin(),
+              createAlignmentPlugin(),
+              createImagePlugin({
+                decorator: composeDecorators(
+                  createFocusPlugin().decorator,
+                  createAlignmentPlugin().decorator
+                ),
+              }),
             ]}
             onTab={onTab}
             spellCheck={true}
