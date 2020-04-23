@@ -15,6 +15,7 @@ import Editor from "draft-js-plugins-editor";
 import { userContext } from "../context/user-context";
 import Prism from "prismjs";
 import createPrismPlugin from "draft-js-prism-plugin";
+import createImagePlugin from "draft-js-image-plugin";
 import "prismjs/themes/prism.css";
 import BlogPostComment from "./blog-post-comment";
 import BlogPostCommentCreate from "./blog-post-comment-create";
@@ -140,6 +141,7 @@ export default function BlogPost() {
                 createPrismPlugin({
                   prism: Prism,
                 }),
+                createImagePlugin(),
               ]}
               onChange={setEditorState}
               readOnly={true}

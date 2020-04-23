@@ -22,11 +22,13 @@ import {
   convertToRaw,
   convertFromRaw,
   Modifier,
+  AtomicBlockUtils,
 } from "draft-js";
 import Editor from "draft-js-plugins-editor";
 import Prism from "prismjs";
 import createPrismPlugin from "draft-js-prism-plugin";
 import createListPlugin from "draft-js-list-plugin";
+import createImagePlugin from "draft-js-image-plugin";
 import axios from "axios";
 
 export default function BlogEditor() {
@@ -34,6 +36,9 @@ export default function BlogEditor() {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [file, setFile] = useState(null);
+  const [fileError, setFileError] = useState(false);
+  const [fileErrorText, setFileErrorText] = useState("");
 
   let history = useHistory();
   let { postId } = useParams();
@@ -135,6 +140,55 @@ export default function BlogEditor() {
     return "not-handled";
   };
 
+  const uploadImage = (e) => {
+    e.preventDefault();
+    if (file !== null) {
+      setFileError(false);
+      setFileErrorText("");
+      let formData = new FormData();
+      formData.append("image", file[0]);
+      axios
+        .post("/api/posts/image", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+          const contentState = editorState.getCurrentContent();
+          const selection = editorState.getSelection();
+          const contentStateWithEntity = contentState.createEntity(
+            "image",
+            "MUTABLE",
+            {
+              src: res.data,
+            }
+          );
+          const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+          const contentStateWithImage = Modifier.applyEntity(
+            contentStateWithEntity,
+            selection,
+            entityKey
+          );
+          const newEditorState = EditorState.push(
+            editorState,
+            contentStateWithImage
+          );
+          setEditorState(
+            AtomicBlockUtils.insertAtomicBlock(editorState, entityKey, " ")
+          );
+        })
+        .catch((err) => {
+          setFileErrorText(true);
+          setFileErrorText("Error sending to S3");
+          console.log(err);
+        });
+    } else {
+      setFileError(true);
+      setFileErrorText("Select a file to upload");
+    }
+  };
+
   const bold = (e) => {
     e.preventDefault();
     setEditorState(RichUtils.toggleInlineStyle(editorState, "BOLD"));
@@ -173,7 +227,6 @@ export default function BlogEditor() {
   const classes = makeStyles({
     card: {
       width: "70vw",
-      height: "60vh",
     },
   })();
 
@@ -209,6 +262,22 @@ export default function BlogEditor() {
               value={description}
             ></TextareaAutosize>
           </FormControl>
+          <Typography color="primary" variant="h6">
+            <Box display="flex" flexDirection="column">
+              <Box>Image upload:</Box>
+              <input type="file" onChange={(e) => setFile(e.target.files)} />
+              <Box mt="10px">
+                <Button
+                  variant="outlined"
+                  onMouseDown={uploadImage}
+                  error={fileError}
+                  helperText={fileErrorText}
+                >
+                  Upload
+                </Button>
+              </Box>
+            </Box>
+          </Typography>
         </Box>
         <Card className={classes.card}>
           <ButtonGroup>
@@ -234,6 +303,7 @@ export default function BlogEditor() {
                 prism: Prism,
               }),
               createListPlugin(),
+              createImagePlugin(),
             ]}
             onTab={onTab}
             spellCheck={true}
