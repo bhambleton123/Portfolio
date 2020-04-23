@@ -11,15 +11,50 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import { useParams, useHistory } from "react-router-dom";
 import { convertFromRaw, EditorState } from "draft-js";
-import Editor from "draft-js-plugins-editor";
+import Editor, { composeDecorators } from "draft-js-plugins-editor";
 import { userContext } from "../context/user-context";
 import Prism from "prismjs";
 import createPrismPlugin from "draft-js-prism-plugin";
 import createImagePlugin from "draft-js-image-plugin";
+import createAlignmentPlugin from "draft-js-alignment-plugin";
+import createResizeablePlugin from "draft-js-resizeable-plugin";
+import createFocusPlugin from "draft-js-focus-plugin";
+import createToolbarPlugin from "draft-js-static-toolbar-plugin";
+import "draft-js-image-plugin/lib/plugin.css";
+import "draft-js-alignment-plugin/lib/plugin.css";
+import "draft-js-focus-plugin/lib/plugin.css";
+import "draft-js-static-toolbar-plugin/lib/plugin.css";
 import "prismjs/themes/prism.css";
 import BlogPostComment from "./blog-post-comment";
 import BlogPostCommentCreate from "./blog-post-comment-create";
 import axios from "axios";
+
+const prismPlugin = createPrismPlugin({
+  prism: Prism,
+});
+const focusPlugin = createFocusPlugin();
+const alignmentPlugin = createAlignmentPlugin();
+const resizeablePlugin = createResizeablePlugin();
+const toolbarPlugin = createToolbarPlugin();
+
+const decorator = composeDecorators(
+  focusPlugin.decorator,
+  alignmentPlugin.decorator,
+  resizeablePlugin.decorator
+);
+
+const imagePlugin = createImagePlugin({
+  decorator,
+});
+
+const plugins = [
+  toolbarPlugin,
+  prismPlugin,
+  focusPlugin,
+  alignmentPlugin,
+  resizeablePlugin,
+  imagePlugin,
+];
 
 export default function BlogPost() {
   let { postId } = useParams();
@@ -137,12 +172,7 @@ export default function BlogPost() {
           <Box mt="60px" pl="30px" pr="30px" mb="130px" textAlign="justify">
             <Editor
               editorState={editorState}
-              plugins={[
-                createPrismPlugin({
-                  prism: Prism,
-                }),
-                createImagePlugin(),
-              ]}
+              plugins={plugins}
               onChange={setEditorState}
               readOnly={true}
             />
