@@ -195,7 +195,6 @@ export default function BlogEditor() {
         .then((res) => {
           console.log(res.data);
           const contentState = editorState.getCurrentContent();
-          const selection = editorState.getSelection();
           const contentStateWithEntity = contentState.createEntity(
             "IMAGE",
             "IMMUTABLE",
@@ -204,15 +203,6 @@ export default function BlogEditor() {
             }
           );
           const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
-          const contentStateWithImage = Modifier.applyEntity(
-            contentStateWithEntity,
-            selection,
-            entityKey
-          );
-          const newEditorState = EditorState.push(
-            editorState,
-            contentStateWithImage
-          );
           setEditorState(
             AtomicBlockUtils.insertAtomicBlock(editorState, entityKey, " ")
           );
