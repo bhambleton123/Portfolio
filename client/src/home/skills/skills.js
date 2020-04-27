@@ -56,6 +56,9 @@ const useStyles = makeStyles({
     display: "flex",
     justifyContent: "center",
   },
+  gridSpacing: {
+    width: "100%",
+  },
 });
 
 export default function Skills({ scrollTo }) {
@@ -67,7 +70,6 @@ export default function Skills({ scrollTo }) {
       display="flex"
       flexDirection="column"
       alignItems="center"
-      width="97%"
     >
       <Typography variant="h4" color="primary">
         <Box mt="8vh" mb="35px" textAlign="center" fontSize="40px">
@@ -76,6 +78,7 @@ export default function Skills({ scrollTo }) {
       </Typography>
       <Grid
         container
+        className={classes.gridSpacing}
         direction="row"
         justify="center"
         alignItems="center"

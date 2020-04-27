@@ -55,7 +55,9 @@ export default function Portfolio() {
           Learn More
         </Button>
       </Box>
-      <Skills scrollTo={projectsRef} />
+      <Box>
+        <Skills scrollTo={projectsRef} />
+      </Box>
       <Box>
         <Projects />
       </Box>
