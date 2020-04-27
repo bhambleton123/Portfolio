@@ -42,14 +42,15 @@ const projects = [
   },
 ];
 
-const useStlyes = makeStyles({
-  gridItem: {
-    marginLeft: "16px",
+const useStyles = makeStyles({
+  gridSpacing: {
+    width: "100%",
+    margin: 0,
   },
 });
 
 export default function Projects() {
-  const classes = useStlyes();
+  const classes = useStyles();
   return (
     <>
       <Typography variant="h4" color="primary">
@@ -59,7 +60,7 @@ export default function Projects() {
       </Typography>
       <Box>
         <Grid
-          className={classes.gridContents}
+          className={classes.gridSpacing}
           container
           spacing={5}
           justify="center"
