@@ -9,6 +9,7 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import ProjectCardModal from "./project-card-modal";
+import { useEffect } from "react";
 
 const useStyles = makeStyles({
   card: {
@@ -28,6 +29,11 @@ export default function ProjectCard({
 }) {
   const classes = useStyles();
   const [openModal, setOpenModal] = useState(false);
+  useEffect(() => {
+    openModal
+      ? (document.body.style.overflow = "hidden")
+      : (document.body.style.overflow = "visible");
+  }, [openModal]);
   return (
     <>
       {openModal ? (
