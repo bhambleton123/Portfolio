@@ -46,10 +46,6 @@ const useStlyes = makeStyles({
   gridItem: {
     marginLeft: "16px",
   },
-  gridContents: {
-    width: "98%",
-    marginLeft: "10px",
-  },
 });
 
 export default function Projects() {
@@ -57,7 +53,7 @@ export default function Projects() {
   return (
     <>
       <Typography variant="h4" color="primary">
-        <Box textAlign="center" mb="20px" ml="30px" fontSize="40px">
+        <Box textAlign="center" mb="20px" fontSize="40px">
           Applications
         </Box>
       </Typography>
@@ -69,7 +65,7 @@ export default function Projects() {
           justify="center"
         >
           {projects.map((project, index) => (
-            <Grid key={index} className={classes.gridItem} item>
+            <Grid key={index} item>
               <ProjectCard
                 image={project.image}
                 title={project.title}

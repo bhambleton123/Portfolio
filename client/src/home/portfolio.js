@@ -56,7 +56,7 @@ export default function Portfolio() {
         </Button>
       </Box>
       <Skills scrollTo={projectsRef} />
-      <Box width="97%">
+      <Box>
         <Projects />
       </Box>
       <Contact />
