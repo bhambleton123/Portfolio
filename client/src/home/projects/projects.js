@@ -5,8 +5,18 @@ import Mandelbrot from "../../assets/mandelbrot.gif";
 import Sorting from "../../assets/sorting-algorithms.gif";
 import BookClub from "../../assets/book_club.gif";
 import Blog from "../../assets/blog.gif";
+import JobAssist from "../../assets/job-board.gif";
 
 const projects = [
+  {
+    image: JobAssist,
+    title: "Job Assist (In development)",
+    description: "Application for tracking jobs via a kanban board",
+    longerDescription: `Going through the job search has been a bit messy, having to use different spreadsheets to track jobs that I've applied to,
+    writing cover letters, customizing resumes. I wanted to create an application to have an all-in-one place to store resources for particular jobs.
+    I'm using Google oauth for authenticating users, MondoDB to offer an easier way to arrange jobs in lists, react-beautiful-dnd for adding 
+    a smooth drag and drop user experience for the board, and much more. Should be deployed within the next couple weeks! (As of 05/25/2020)`,
+  },
   {
     image: Blog,
     title: "Portfolio Blog",
